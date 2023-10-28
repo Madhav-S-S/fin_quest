@@ -1,5 +1,6 @@
 import 'package:fin_quest/home.dart';
 import 'package:fin_quest/login.dart';
+import 'package:fin_quest/snake_game.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
