@@ -27,13 +27,13 @@ class _HomeState extends State<Home> {
               fontFamily: "Poppins"),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.logout),
+          icon: const Icon(Icons.settings),
           onPressed: () {},
         ),
         actions: [
           // Add a gear button
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.logout),
             onPressed: () {},
           ),
         ],
