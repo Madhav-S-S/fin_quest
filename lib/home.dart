@@ -1,6 +1,3 @@
-
-
-import 'package:fin_quest/login.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -18,130 +15,53 @@ class _HomeState extends State<Home> {
         //make the backbutton disappear
         automaticallyImplyLeading: false,
         //create a dashboard app bar
-        backgroundColor: Color.fromRGBO(0, 28, 46, 1),
-        // leading: null,
-        // automaticallyImplyLeading: false,
+        backgroundColor: Color.fromRGBO(255, 0, 0, 1),
+        //remove the shadow of the app bar
+        elevation: 0,
         centerTitle: true,
         title: const Text(
-          "STUDENT HOME",
+          "Game Zone",
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.normal,
               fontFamily: "Poppins"),
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {},
+        ),
+        actions: [
+          // Add a gear button
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Container(
-        color: Color.fromRGBO(0, 28, 46, 1),
-        child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                //make border radius circular only at the top
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30)),),
-            child: SingleChildScrollView(
-                child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 10),
-                  Text("Select the Complaint Type",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Poppins")),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home()));
-                    },
-                    child: Container(
-                        height: 150,
-                        width: 1000,
-                        //make the container half transparent
-                        child: Center(
-                          child: Text(
-                            "GENERAL",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontFamily: "Poppins",
-                                color: Colors.white),
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          //make the color of the container transparent
-                          color: Colors.white.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(15),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home()));
-                    },
-                    child: Container(
-                        height: 150,
-                        width: 1000,
-                        child: Center(
-                          child: Text(
-                            "OPEN",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontFamily: "Poppins",
-                                color: Colors.white),
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(15),
-                        )),
-                  ),
-                  SizedBox(height: 30),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home()));
-                    },
-                    child: Container(
-                        height: 150,
-                        width: 1000,
-                        child: Center(
-                          child: Text(
-                            "PERSONAL",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontFamily: "Poppins",
-                                color: Colors.white),
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(15),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  //increase the width of the MaterialButton below
-                  
-                ],
+        color: Color.fromRGBO(255, 0, 0, 1),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    )
+                  ],
+                ),
               ),
-            ))),
+            ],
+          ),
+        ),
       ),
     );
   }
