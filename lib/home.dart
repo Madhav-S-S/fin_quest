@@ -11,6 +11,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         //make the backbutton disappear
         automaticallyImplyLeading: false,
@@ -129,6 +130,23 @@ class _HomeState extends State<Home> {
                     )
                   ],
                 ),
+                child: Column(
+  children: [
+    Container(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "          Customer ID",
+        style: TextStyle(
+          color: Color.fromARGB(120, 0, 0, 0),
+          fontSize: 10,
+          fontFamily: "Poppins"),
+      ),
+    ),
+  ],
+)
+
+
+
               ),
             ],
           ),
