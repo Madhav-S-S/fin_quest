@@ -1,265 +1,114 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fin_quest/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  int _emailCorrect = 0;//means the email is not typed
-  int _passwordCorrect = 0;//means the password is not typed
-  bool _isLoading = false;
-  bool _isObscure3 = true;
-  bool visible = false;
-  final _formkey = GlobalKey<FormState>();
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-                width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Container(
-                  decoration: BoxDecoration(),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.blue,
+              Colors.purple,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
           child: SingleChildScrollView(
-            child: Form(
-              key: _formkey,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-            20,100, 20, 0),
-                child: Column(     
-                  children: <Widget>[
-                     
-                    Text(
-                      "VOICE",
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.white,
-                        fontSize: 55,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0x77ffffff),
-                        hintText: 'SAINTGITS MAIL ID',
-                         hintStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          color: Colors.white38),
-                        enabled: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: new BorderSide(color: Colors.white),
-                          borderRadius: new BorderRadius.circular(20),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.length == 0) {
-                          return "Email cannot be empty";
-                        }
-                        if (!RegExp(
-                                "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                            .hasMatch(value)) {
-                          return ("Please enter a valid email");
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        emailController.text = value!;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: _isObscure3,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                            icon: Icon(_isObscure3
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                _isObscure3 = !_isObscure3;
-                              });
-                            }),
-                        filled: true,
-                        fillColor: Color(0x77ffffff),
-                        hintText: 'PASSWORD',
-                        hintStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          color: Colors.white38),
-                        enabled: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: new BorderSide(color: Colors.white),
-                          borderRadius: new BorderRadius.circular(20),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25),
-                        ),
-                      ),
-                      validator: (value) {
-                        RegExp regex = new RegExp(r'^.{6,}$');
-                        if (value!.isEmpty) {
-                          return "Password cannot be empty";
-                        }
-                        if (!regex.hasMatch(value)) {
-                          return ("please enter valid password min. 6 character");
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        passwordController.text = value!;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    //increase the width of the MaterialButton below
-                    MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width-100,
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20.0))),
-                      elevation: 5.0,
-                      height: 50,
-                      onPressed: () {
-                        setState(() {
-                          visible = true;
-                        });
-                        signIn(
-                            emailController.text, passwordController.text);
-                      },
-                      child: !_isLoading
-                      ? const Text(
-                          'Log in',
-                            style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                        )
-                      : const CircularProgressIndicator(
-                          color: Colors.blue
-                        ),
-                      color: Colors.white,
-                    ),
-                    checkPassword(_passwordCorrect),
-                    checkEmail(_emailCorrect),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Don't have account?",
-                              style: TextStyle(color: Colors.white70)),
-                          GestureDetector(
-                            onTap: () {
-                              
-                            },
-                            child: const Text(
-                              " Sign Up",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        ],
-                      ),
-                  ],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Image.asset(
+                //   'assets/images/logo.png',
+                //   width: 150,
+                //   height: 150,
+                // ),
+                SizedBox(height: 20),
+                Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: 'Customer ID',
+                    hintStyle: TextStyle(color: Colors.white),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.5),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                SizedBox(height: 20),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // validate using firebase
+                      login();
+                      Navigator.pushNamed(context, '/home');
+                    },
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
   }
-  void route() {
-    User? user = FirebaseAuth.instance.currentUser;
-    var kk = FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .get()
-            .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-           Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>  Home(),
-          ),
-        );
-        }
-    });
-  }
+  Future<void> login() async {
+  // Get the customer ID from the text field.
+  String customerId = _emailController.text;
 
-  void signIn(String email, String password) async {
-    setState(() {
-      _isLoading = true;
-    });
-    if (_formkey.currentState!.validate()) {
-      try {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        setState(() {
-          _isLoading = false;
-        });
-        _passwordCorrect = 1;//means password is correct
-        route();
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          _emailCorrect = 2;//means email is not correct
-          print('No user found for that email.');
-        } else if (e.code == 'wrong-password') {
-          _passwordCorrect = 2;//means password is not correct
-          //display in the screen that password is wrong
-          print('Wrong password provided for that user.');
-        }
-      }
-    }
+  // Create a reference to the collection 'user'.
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  // Check if the document with the given customer ID exists.
+  DocumentSnapshot snapshot = await users.doc(customerId).get();
+  if (snapshot.exists) {
+    // Navigate to the home page.
+    Navigator.pushNamed(context, '/home');
+  } else {
+    // Show an error message.
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('The customer ID does not exist.'),
+      ),
+    );
   }
 }
 
-checkPassword(_passwordCorrect) {
-  if (_passwordCorrect == 2) {
-    return Text(
-      "Password is incorrect",
-      style: TextStyle(color: Colors.red),
-    );
-  } else {
-    return Text("");
-  }
-}
-checkEmail(_emailCorrect) {
-  if (_emailCorrect == 2) {
-    return Text(
-      "No user found for that email",
-      style: TextStyle(color: Colors.red),
-    );
-  } else {
-    return Text("");
-  }
 }
