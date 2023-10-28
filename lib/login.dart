@@ -65,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       // validate using firebase
                       login();
-                      Navigator.pushNamed(context, '/home');
                     },
                     child: Text(
                       'Login',
