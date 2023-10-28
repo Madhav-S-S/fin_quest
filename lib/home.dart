@@ -1,15 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final String customerId;
+
+  Home({required this.customerId, Key? key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  int m_coins = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Get the m_coins value from Firebase
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.customerId)
+        .get()
+        .then((document) {
+      setState(() {
+        m_coins = document['m_coins'];
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
       
       appBar: AppBar(
@@ -35,7 +56,9 @@ class _HomeState extends State<Home> {
           // Add a gear button
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/login');
+            },
           ),
         ],
       ),
@@ -58,15 +81,19 @@ class _HomeState extends State<Home> {
                             width: 40,
                             height: 40,
                           ),
-
-                          Text(
-                            '  1000',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          FutureBuilder<DocumentSnapshot>(
+                            builder: ((context,snapshot){
+                              if (snapshot.connectionState == ConnectionState.done){
+                                Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                                return Text(
+                                  '  ${data['m_coins']}',
+                                );
+                              }
+                              return Text(
+                                'Loading...',
+                              );
+                            })
                             ),
-                          ),
                         ],
                       ),
                       SizedBox(
@@ -131,22 +158,19 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 child: Column(
-  children: [
-    Container(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        "          Customer ID",
-        style: TextStyle(
-          color: Color.fromARGB(120, 0, 0, 0),
-          fontSize: 10,
-          fontFamily: "Poppins"),
-      ),
-    ),
-  ],
-)
-
-
-
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "          customerId: ${widget.customerId}",
+                      style: TextStyle(
+                        color: Color.fromARGB(120, 0, 0, 0),
+                        fontSize: 10,
+                        fontFamily: "Poppins"),
+                    ),
+                  ),
+                ],
+              )
               ),
             ],
           ),

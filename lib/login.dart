@@ -1,3 +1,4 @@
+import 'package:fin_quest/home.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 class LoginPage extends StatefulWidget {
@@ -6,8 +7,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  static final id_controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20),
                 TextField(
-                  controller: _emailController,
+                  controller: id_controller,
                   decoration: InputDecoration(
                     hintText: 'Customer ID',
                     hintStyle: TextStyle(color: Colors.white),
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   Future<void> login() async {
   // Get the customer ID from the text field.
-  String customerId = _emailController.text;
+  String customerId = id_controller.text;
 
   // Create a reference to the collection 'user'.
   CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -99,7 +99,11 @@ class _LoginPageState extends State<LoginPage> {
   DocumentSnapshot snapshot = await users.doc(customerId).get();
   if (snapshot.exists) {
     // Navigate to the home page.
-    Navigator.pushNamed(context, '/home');
+    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Home(customerId: customerId,)),);
+
   } else {
     // Show an error message.
     ScaffoldMessenger.of(context).showSnackBar(
