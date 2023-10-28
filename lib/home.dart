@@ -43,6 +43,77 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/m_coins.png',
+                            width: 40,
+                            height: 40,
+                          ),
+
+                          Text(
+                            '  1000',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      //white button with text 'withdraw'
+                      Container(
+                        width: 100,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Withdraw',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Column(
+                    children: [
+                      //circular avatar
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundImage: AssetImage('assets/images/dp.jpg')),
+                      Text("king_slayer",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: "Poppins")),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
