@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int m_coins = 0;
-
+  String handle = 'unknown';
   @override
   void initState() {
     super.initState();
@@ -25,6 +25,17 @@ class _HomeState extends State<Home> {
       if (document.exists) {
         setState(() {
           m_coins = document.data()!['m_coins'];
+        });
+      }
+    });
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.customerId)
+        .snapshots()
+        .listen((document) {
+      if (document.exists) {
+        setState(() {
+          handle = document.data()!['handle'];
         });
       }
     });
@@ -79,6 +90,11 @@ class _HomeState extends State<Home> {
                           ),
                           Text(
                             '  $m_coins',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Poppins"),
                           ),
                         ],
                       ),
@@ -115,7 +131,7 @@ class _HomeState extends State<Home> {
                         backgroundImage: AssetImage('assets/images/dp.jpg'),
                       ),
                       Text(
-                        "king_slayer",
+                        "$handle",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
