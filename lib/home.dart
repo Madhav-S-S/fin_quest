@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
 class Home extends StatefulWidget {
   final String customerId;
@@ -17,28 +16,26 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // Get the m_coins value from Firebase
+    // Listen to changes in the 'm_coins' field in Firestore
     FirebaseFirestore.instance
         .collection('users')
         .doc(widget.customerId)
-        .get()
-        .then((document) {
-      setState(() {
-        m_coins = document['m_coins'];
-      });
+        .snapshots()
+        .listen((document) {
+      if (document.exists) {
+        setState(() {
+          m_coins = document.data()!['m_coins'];
+        });
+      }
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
-      
       appBar: AppBar(
-        //make the backbutton disappear
         automaticallyImplyLeading: false,
-        //create a dashboard app bar
         backgroundColor: Color.fromRGBO(255, 0, 0, 1),
-        //remove the shadow of the app bar
         elevation: 0,
         centerTitle: true,
         title: const Text(
@@ -53,7 +50,6 @@ class _HomeState extends State<Home> {
           onPressed: () {},
         ),
         actions: [
-          // Add a gear button
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
@@ -81,25 +77,14 @@ class _HomeState extends State<Home> {
                             width: 40,
                             height: 40,
                           ),
-                          FutureBuilder<DocumentSnapshot>(
-                            builder: ((context,snapshot){
-                              if (snapshot.connectionState == ConnectionState.done){
-                                Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                                return Text(
-                                  '  ${data['m_coins']}',
-                                );
-                              }
-                              return Text(
-                                'Loading...',
-                              );
-                            })
-                            ),
+                          Text(
+                            '  $m_coins',
+                          ),
                         ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      //white button with text 'withdraw'
                       Container(
                         width: 100,
                         height: 30,
@@ -125,16 +110,18 @@ class _HomeState extends State<Home> {
                   ),
                   Column(
                     children: [
-                      //circular avatar
                       CircleAvatar(
                         radius: 60,
-                        backgroundImage: AssetImage('assets/images/dp.jpg')),
-                      Text("king_slayer",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Poppins")),
+                        backgroundImage: AssetImage('assets/images/dp.jpg'),
+                      ),
+                      Text(
+                        "king_slayer",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Poppins"),
+                      ),
                     ],
                   )
                 ],
@@ -154,23 +141,24 @@ class _HomeState extends State<Home> {
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3),
-                    )
+                    ),
                   ],
                 ),
                 child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "          customerId: ${widget.customerId}",
-                      style: TextStyle(
-                        color: Color.fromARGB(120, 0, 0, 0),
-                        fontSize: 10,
-                        fontFamily: "Poppins"),
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "          customerId: ${widget.customerId}",
+                        style: TextStyle(
+                          color: Color.fromARGB(120, 0, 0, 0),
+                          fontSize: 10,
+                          fontFamily: "Poppins",
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              )
+                  ],
+                ),
               ),
             ],
           ),
