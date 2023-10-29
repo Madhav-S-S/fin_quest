@@ -300,7 +300,7 @@ class _HomeState extends State<Home> {
               primary: Colors.red,
             ),
             onPressed: () {
-                            Navigator.push(
+              Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => decisionPage(customerId: customerId),

@@ -1,3 +1,5 @@
+import 'package:fin_quest/SnakeGame/room_page.dart';
+import 'package:fin_quest/pool_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,7 @@ class _decisionPageState extends State<decisionPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Color.fromARGB(255, 255, 17, 0),
         title: Text('Room'),
       ),
       body: Stack(
@@ -42,44 +44,44 @@ class _decisionPageState extends State<decisionPage> {
           padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 10),
-              Text(
-                "Select an Option",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Poppins",
-                ),
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 150),
               ElevatedButton(
                 onPressed: () {
-                  // Code to create a new room goes here
+                  Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PoolSelectionPage(customerId: widget.customerId),
+              ),
+            );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.transparent, // Set button color to transparent
+                  primary: Colors.white.withOpacity(0.3), // Set a slightly transparent white background
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   minimumSize: Size(300, 150), // Set the button size
                 ),
                 child: Text(
-                  "Create New Room",
+                  "Join Room",
                   style: TextStyle(
                     fontSize: 30,
                     fontFamily: "Poppins",
-                    color: Colors.white,
+                    color: Colors.white, // Text color
                   ),
                 ),
               ),
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  // Code to navigate to "My Room" goes here
+                  Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => roomPage(),
+              ),
+            );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.transparent, // Set button color to transparent
+                  primary: Colors.white.withOpacity(0.3), // Set a slightly transparent white background
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -90,10 +92,11 @@ class _decisionPageState extends State<decisionPage> {
                   style: TextStyle(
                     fontSize: 30,
                     fontFamily: "Poppins",
-                    color: Colors.white,
+                    color: Colors.white, // Text color
                   ),
                 ),
               ),
+
               SizedBox(height: 40),
             ],
           ),

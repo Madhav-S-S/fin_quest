@@ -21,7 +21,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: const Color.fromARGB(255, 255, 17, 0),
         title: Text('Select the Pool'),
       ),
       body: Container(

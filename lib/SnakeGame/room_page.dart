@@ -30,7 +30,7 @@ class _roomPageState extends State<roomPage> {
       backgroundColor: Color.fromRGBO(255, 0, 0, 1),
         centerTitle: true,
         title: const Text(
-          "Rooms",
+          "My Room",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal,fontFamily: "Poppins"),
         ),
       ),
