@@ -166,12 +166,12 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.all(16),
                   children: [
                     _buildGameCard(
-                      gameName: "Snake Game",
-                      imageURL: "assets/images/snake.jpg",
+                      gameName: "Snake",
+                      imageURL: "assets/images/snake.webp",
                     ),
                     _buildGameCard(
-                      gameName: "Game 2",
-                      imageURL: "assets/images/coming soon.jpg",
+                      gameName: "Financial Quiz",
+                      imageURL: "assets/images/bank quiz.jpg",
                     ),
                     // _buildGameCard(
                     //   gameName: "Game 3",
@@ -190,17 +190,21 @@ class _HomeState extends State<Home> {
 
   Widget _buildGameCard({required String gameName, required String imageURL}) {
     return Container(
-      margin: EdgeInsets.only(right: 16),
+      margin: EdgeInsets.only(right: 14),
       width: 180, // Adjust the card width as needed
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            imageURL,
-            width: 160,
-            height: 160,
-            fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30), // Adjust the radius as needed
+            child: Image.asset(
+              imageURL,
+              width: 140,
+              height: 140,
+              fit: BoxFit.cover,
+            ),
           ),
+
           SizedBox(height: 8),
           Text(
             gameName,
