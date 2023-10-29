@@ -109,6 +109,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     final newRoom = await roomsCollection.add({
       'currentOccupancy': 1, // Initialize with the customer
       'players': [customerId],
+      'pool':pool
       // You can add other room properties as needed
     });
 
