@@ -146,41 +146,68 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.4,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: ListView(
-                  scrollDirection: Axis.horizontal, // Enable horizontal scrolling
-                  padding: EdgeInsets.all(16),
-                  children: [
-                    _buildGameCard(
-                      gameName: "Snake",
-                      imageURL: "assets/images/snake.webp",
-                    ),
-                    _buildGameCard(
-                      gameName: "Financial Quiz",
-                      imageURL: "assets/images/bank quiz.jpg",
-                    ),
-                    // _buildGameCard(
-                    //   gameName: "Game 3",
-                    //   imageURL: "assets/images/game3.jpg",
-                    // ),
-                    // Add more game/app cards as needed
-                  ],
-                ),
-              ),
+             Container(
+  width: MediaQuery.of(context).size.width,
+  height: MediaQuery.of(context).size.height, // Set the height to occupy the entire screen height
+  decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.vertical(top: Radius.circular(30)), // Round the top edges
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.5),
+        spreadRadius: 5,
+        blurRadius: 7,
+        offset: Offset(0, 3),
+      ),
+    ],
+  ),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      // Add the "Newly Arrived Games" text here
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16, left: 30),
+          child: Text(
+            "Newly Arrived Games",
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              fontFamily: "poppins",
+            ),
+          ),
+        ),
+      ),
+      // Horizontal scrolling for game cards
+      Container(
+        height: MediaQuery.of(context).size.height * 0.4, // Adjust the height as needed
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.all(16),
+          children: [
+            _buildGameCard(
+              gameName: "Snake",
+              imageURL: "assets/images/snake.webp",
+            ),
+            _buildGameCard(
+              gameName: "Financial Quiz",
+              imageURL: "assets/images/bank quiz.jpg",
+            ),
+            // _buildGameCard(
+            //   gameName: "Game 3",
+            //   imageURL: "assets/images/game3.jpg",
+            // ),
+            // Add more game/app cards as needed
+          ],
+        ),
+      ),
+    ],
+  ),
+),
+
+
+
             ],
           ),
         ),
