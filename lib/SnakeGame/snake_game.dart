@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:fin_quest/SnakeGame/game_over.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -111,7 +112,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
           setState(() {
             _hasStarted = !_hasStarted;
           });
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GamePage()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GameOver(score: _playerScore)));
         }
       });
     }
