@@ -191,16 +191,16 @@ class _HomeState extends State<Home> {
               imageURL: "assets/images/snake.webp",
             ),
             _buildGameCard(
-              gameName: "Monopoly",
-              imageURL: "assets/images/monopoly.webp",
-            ),
-            _buildGameCard(
               gameName: "Financial Quiz",
               imageURL: "assets/images/bank quiz.jpg",
             ),
             _buildGameCard(
               gameName: "Investment Simulator",
               imageURL: "assets/images/sharemarket_sim.webp",
+            ),
+            _buildGameCard(
+              gameName: "Monopoly",
+              imageURL: "assets/images/monopoly.webp",
             ),
           ],
         ),
@@ -217,6 +217,23 @@ class _HomeState extends State<Home> {
               fontFamily: "poppins",
             ),
           ),
+        ),
+      ),
+      Container(
+        height: MediaQuery.of(context).size.height * 0.3, // Adjust the height as needed
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.all(16),
+          children: [
+            _buildCouponCard(
+              gameName: "Flipkart Gift Card",
+              imageURL: "assets/images/flipkart.png",
+            ),
+            _buildCouponCard(
+              gameName: "Amazon Gift Card",
+              imageURL: "assets/images/amazon.webp",
+            ),
+          ],
         ),
       ),
     ],
@@ -265,7 +282,46 @@ class _HomeState extends State<Home> {
             onPressed: () {
               // Handle button press for the game/app
             },
-            child: Text("Play"),
+            child: Text("PLAY"),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildCouponCard({required String gameName, required String imageURL}) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: 250, // Adjust the card width as needed
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30), // Adjust the radius as needed
+            child: Image.asset(
+              imageURL,
+              width: 250,
+              height: 140,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          SizedBox(height: 8),
+          Text(
+            gameName,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ElevatedButton(
+            //make the color of the button red
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red,
+            ),
+            onPressed: () {
+              // Handle button press for the game/app
+            },
+            child: Text("REDEEM"),
           ),
         ],
       ),
