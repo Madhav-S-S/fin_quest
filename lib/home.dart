@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fin_quest/decision_page.dart';
 import 'package:fin_quest/pool_page.dart';
 import 'package:flutter/material.dart';
 
@@ -302,7 +303,7 @@ class _HomeState extends State<Home> {
                             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PoolSelectionPage(customerId: customerId),
+                builder: (context) => decisionPage(customerId: customerId),
               ),
             );
             },
