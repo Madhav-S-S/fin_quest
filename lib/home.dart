@@ -200,22 +200,26 @@ class _HomeState extends State<Home> {
             _buildGameCard(
               gameName: "Snake",
               imageURL: "assets/images/snake.webp",
-              page : PoolSelectionPage(),
+              page : PoolSelectionPage(customerId: widget.customerId,),
+              customerId: widget.customerId,
             ),
             _buildGameCard(
               gameName: "Financial Quiz",
               imageURL: "assets/images/bank quiz.jpg",
-              page : PoolSelectionPage(),
+              page : PoolSelectionPage(customerId: widget.customerId,),
+              customerId: widget.customerId,
             ),
             _buildGameCard(
               gameName: "Investment Simulator",
               imageURL: "assets/images/sharemarket_sim.webp",
-              page : PoolSelectionPage()
+              page : PoolSelectionPage(customerId: widget.customerId,),
+              customerId: widget.customerId,
             ),
             _buildGameCard(
               gameName: "Monopoly",
               imageURL: "assets/images/monopoly.webp",
-              page : PoolSelectionPage(),
+              page : PoolSelectionPage(customerId: widget.customerId,),
+              customerId: widget.customerId,
             ),
           ],
         ),
@@ -264,7 +268,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildGameCard({required String gameName, required String imageURL,page}) {
+  Widget _buildGameCard({required String gameName, required String imageURL,page, required String customerId}) {
     return Container(
       margin: EdgeInsets.only(right: 14),
       width: 180, // Adjust the card width as needed
@@ -296,9 +300,11 @@ class _HomeState extends State<Home> {
             ),
             onPressed: () {
                             Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PoolSelectionPage()),);
+              context,
+              MaterialPageRoute(
+                builder: (context) => PoolSelectionPage(customerId: customerId),
+              ),
+            );
             },
             child: Text("PLAY"),
           ),

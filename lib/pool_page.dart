@@ -1,6 +1,9 @@
+import 'package:fin_quest/SnakeGame/room_page.dart';
 import 'package:flutter/material.dart';
 
 class PoolSelectionPage extends StatefulWidget {
+  final String customerId;
+  PoolSelectionPage({required this.customerId, Key? key}) : super(key: key);
   @override
   _PoolSelectionPageState createState() => _PoolSelectionPageState();
 }
@@ -42,7 +45,14 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
                       ),
                       minimumSize: Size(250, 170),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => roomPage(), 
+                        ),
+                      );
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
