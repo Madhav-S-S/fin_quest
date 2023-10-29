@@ -121,10 +121,20 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          'Customer ID: ${widget.customerId}',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 75,
                   ),
                   Column(
                     children: [
