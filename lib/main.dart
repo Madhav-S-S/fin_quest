@@ -1,6 +1,7 @@
 import 'package:fin_quest/home.dart';
 import 'package:fin_quest/login.dart';
 import 'package:fin_quest/SnakeGame/snake_game.dart';
+import 'package:fin_quest/pool_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login App',
-      home: LoginPage(),
+      home: PoolSelectionPage(),
       routes: {
         '/login': (context) => LoginPage(),
       },
