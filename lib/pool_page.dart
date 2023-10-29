@@ -76,7 +76,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       ),
     );
   }
-  Future<void> checkAndEnterRoom(String customerId,String pool) async {
+  Future<void> checkAndEnterRoom(String customerId, String pool) async {
   final firestore = FirebaseFirestore.instance;
   final roomsCollection = firestore.collection('${pool}_rooms');
 
@@ -84,15 +84,18 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
   final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 10).get();
 
   if (vacantRooms.docs.isNotEmpty) {
-    // Enter the customer into the first available room, for example
+    // Find the first available room
     final roomDoc = vacantRooms.docs[0];
     final roomId = roomDoc.id;
 
-    // Update the room's occupancy and add the customer
-    await roomsCollection.doc(roomId).update({
-      'currentOccupancy': FieldValue.increment(1),
-      'players': FieldValue.arrayUnion([customerId]),
-    });
+    // Check if the customer's ID is not already in the 'players' array
+    if (!(roomDoc['players'] as List).contains(customerId)) {
+      // Update the room's occupancy and add the customer
+      await roomsCollection.doc(roomId).update({
+        'currentOccupancy': FieldValue.increment(1),
+        'players': FieldValue.arrayUnion([customerId]),
+      });
+    }
 
     // Navigate to the room page
     Navigator.push(
@@ -107,4 +110,6 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     print('${pool}_rooms');
   }
 }
+
+
 }
