@@ -105,11 +105,26 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       ),
     );
   } else {
-    // Handle the case when there are no vacant rooms
-    print('No vacant rooms available.');
-    print('${pool}_rooms');
+    // Create a new room if no vacant rooms are available
+    final newRoom = await roomsCollection.add({
+      'currentOccupancy': 1, // Initialize with the customer
+      'players': [customerId],
+      // You can add other room properties as needed
+    });
+
+    // Get the ID of the newly created room
+    final roomId = newRoom.id;
+
+    // Navigate to the room page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => roomPage(), // Pass the room ID to the RoomPage
+      ),
+    );
   }
 }
+
 
 
 }
