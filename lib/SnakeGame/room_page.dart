@@ -35,36 +35,6 @@ class _roomPageState extends State<roomPage> {
         ),
       ),
       body: Container(
-        color: Color.fromRGBO(0, 28, 46, 1),
-        child: Container(
-          decoration: BoxDecoration(
-                //make border radius circular only at the top
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-                gradient: LinearGradient(colors: [
-                  Color.fromRGBO(0, 28, 46, 1),
-                  Color.fromRGBO(0, 28, 46, 1),
-            ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-          child: StreamBuilder(
-            //order the complaints by date published
-            stream: FirebaseFirestore.instance.collection('gen_complaints').orderBy('upvotes',descending: true).snapshots(),
-            builder: (context,
-                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) => roomCard(
-                  snap : snapshot.data!.docs[index].data(),
-                ),
-             
-              );
-            },
-          ),
-        ),
       ),
     );
   }
