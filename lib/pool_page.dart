@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fin_quest/SnakeGame/room_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class PoolSelectionPage extends StatefulWidget {
 }
 
 class _PoolSelectionPageState extends State<PoolSelectionPage> {
-  final List<String> pools = ['100 Coins', '200 Coins', '500 Coins'];
+  final List<String> pools = ['100', '200', '500'];
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +47,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
                       minimumSize: Size(250, 170),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => roomPage(), 
-                        ),
-                      );
+                      checkAndEnterRoom(widget.customerId, pool);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -80,4 +76,35 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       ),
     );
   }
+  Future<void> checkAndEnterRoom(String customerId,String pool) async {
+  final firestore = FirebaseFirestore.instance;
+  final roomsCollection = firestore.collection('${pool}_rooms');
+
+  // Query rooms with available space
+  final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 10).get();
+
+  if (vacantRooms.docs.isNotEmpty) {
+    // Enter the customer into the first available room, for example
+    final roomDoc = vacantRooms.docs[0];
+    final roomId = roomDoc.id;
+
+    // Update the room's occupancy and add the customer
+    await roomsCollection.doc(roomId).update({
+      'currentOccupancy': FieldValue.increment(1),
+      'players': FieldValue.arrayUnion([customerId]),
+    });
+
+    // Navigate to the room page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => roomPage(), // Pass the room ID to the RoomPage
+      ),
+    );
+  } else {
+    // Handle the case when there are no vacant rooms
+    print('No vacant rooms available.');
+    print('${pool}_rooms');
+  }
+}
 }
