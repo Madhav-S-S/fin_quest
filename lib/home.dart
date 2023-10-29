@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int m_coins = 0;
   String handle = 'unknown';
+
   @override
   void initState() {
     super.initState();
@@ -147,7 +148,7 @@ class _HomeState extends State<Home> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
@@ -160,25 +161,61 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                child: Column(
+                child: ListView(
+                  scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                  padding: EdgeInsets.all(16),
                   children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "          customerId: ${widget.customerId}",
-                        style: TextStyle(
-                          color: Color.fromARGB(120, 0, 0, 0),
-                          fontSize: 10,
-                          fontFamily: "Poppins",
-                        ),
-                      ),
+                    _buildGameCard(
+                      gameName: "Snake Game",
+                      imageURL: "assets/images/snake.jpg",
                     ),
+                    _buildGameCard(
+                      gameName: "Game 2",
+                      imageURL: "assets/images/coming soon.jpg",
+                    ),
+                    // _buildGameCard(
+                    //   gameName: "Game 3",
+                    //   imageURL: "assets/images/game3.jpg",
+                    // ),
+                    // Add more game/app cards as needed
                   ],
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildGameCard({required String gameName, required String imageURL}) {
+    return Container(
+      margin: EdgeInsets.only(right: 16),
+      width: 180, // Adjust the card width as needed
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            imageURL,
+            width: 160,
+            height: 160,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 8),
+          Text(
+            gameName,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Handle button press for the game/app
+            },
+            child: Text("Play"),
+          ),
+        ],
       ),
     );
   }
