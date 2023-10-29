@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fin_quest/pool_page.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -189,18 +190,22 @@ class _HomeState extends State<Home> {
             _buildGameCard(
               gameName: "Snake",
               imageURL: "assets/images/snake.webp",
+              page : PoolSelectionPage(),
             ),
             _buildGameCard(
               gameName: "Financial Quiz",
               imageURL: "assets/images/bank quiz.jpg",
+              page : PoolSelectionPage(),
             ),
             _buildGameCard(
               gameName: "Investment Simulator",
               imageURL: "assets/images/sharemarket_sim.webp",
+              page : PoolSelectionPage()
             ),
             _buildGameCard(
               gameName: "Monopoly",
               imageURL: "assets/images/monopoly.webp",
+              page : PoolSelectionPage(),
             ),
           ],
         ),
@@ -249,7 +254,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildGameCard({required String gameName, required String imageURL}) {
+  Widget _buildGameCard({required String gameName, required String imageURL,page}) {
     return Container(
       margin: EdgeInsets.only(right: 14),
       width: 180, // Adjust the card width as needed
@@ -280,7 +285,10 @@ class _HomeState extends State<Home> {
               primary: Colors.red,
             ),
             onPressed: () {
-              // Handle button press for the game/app
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PoolSelectionPage()),);
             },
             child: Text("PLAY"),
           ),
@@ -319,7 +327,6 @@ class _HomeState extends State<Home> {
               primary: Colors.red,
             ),
             onPressed: () {
-              // Handle button press for the game/app
             },
             child: Text("REDEEM"),
           ),
