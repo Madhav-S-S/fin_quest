@@ -170,7 +170,7 @@ class _HomeState extends State<Home> {
         child: Padding(
           padding: const EdgeInsets.only(top: 16, left: 30),
           child: Text(
-            "Newly Arrived Games",
+            "New Games",
             style: TextStyle(
               fontSize: 19,
               fontWeight: FontWeight.bold,
@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
       ),
       // Horizontal scrolling for game cards
       Container(
-        height: MediaQuery.of(context).size.height * 0.4, // Adjust the height as needed
+        height: MediaQuery.of(context).size.height * 0.3, // Adjust the height as needed
         child: ListView(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.all(16),
@@ -191,15 +191,32 @@ class _HomeState extends State<Home> {
               imageURL: "assets/images/snake.webp",
             ),
             _buildGameCard(
+              gameName: "Monopoly",
+              imageURL: "assets/images/monopoly.webp",
+            ),
+            _buildGameCard(
               gameName: "Financial Quiz",
               imageURL: "assets/images/bank quiz.jpg",
             ),
-            // _buildGameCard(
-            //   gameName: "Game 3",
-            //   imageURL: "assets/images/game3.jpg",
-            // ),
-            // Add more game/app cards as needed
+            _buildGameCard(
+              gameName: "Investment Simulator",
+              imageURL: "assets/images/sharemarket_sim.webp",
+            ),
           ],
+        ),
+      ),
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            "Awesome Gift Cards",
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              fontFamily: "poppins",
+            ),
+          ),
         ),
       ),
     ],
@@ -241,6 +258,10 @@ class _HomeState extends State<Home> {
             ),
           ),
           ElevatedButton(
+            //make the color of the button red
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red,
+            ),
             onPressed: () {
               // Handle button press for the game/app
             },
