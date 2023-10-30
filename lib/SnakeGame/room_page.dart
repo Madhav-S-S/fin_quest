@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fin_quest/SnakeGame/snake_game.dart';
 import 'package:flutter/material.dart';
 
 class RoomPage extends StatefulWidget {
@@ -92,7 +93,13 @@ class _RoomPageState extends State<RoomPage> {
       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
     ),
     onPressed: () {
-      // Handle the "Play" button action here.
+      // Navigate to the game page
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GamePage(),
+        ),
+      );
     },
     child: Text("Play"),
   ),

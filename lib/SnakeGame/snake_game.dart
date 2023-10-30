@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:fin_quest/SnakeGame/game_over.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: GamePage(),
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: GamePage(),
+//   ));
+// }
 
 class GamePage extends StatefulWidget {
   @override
