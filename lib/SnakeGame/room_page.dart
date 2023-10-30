@@ -55,6 +55,7 @@ class _RoomPageState extends State<RoomPage> {
                 .collection('${currentPool}_rooms')
                 .doc(currentRoom)
                 .collection('player_data')
+                .orderBy('score',descending: true)
                 .snapshots(),
             builder: (context, playerDataSnapshot) {
               if (!playerDataSnapshot.hasData) {
