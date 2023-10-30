@@ -76,9 +76,10 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       ),
     );
   }
-  Future<void> checkAndEnterRoom(String customerId, String pool) async {
+ Future<void> checkAndEnterRoom(String customerId, String pool) async {
   final firestore = FirebaseFirestore.instance;
   final roomsCollection = firestore.collection('${pool}_rooms');
+  final usersCollection = firestore.collection('users');
 
   // Query rooms with available space
   final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 10).get();
@@ -95,6 +96,11 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
         'currentOccupancy': FieldValue.increment(1),
         'players': FieldValue.arrayUnion([customerId]),
       });
+      
+      // Update the user's currentPool in the 'users' collection
+      await usersCollection.doc(customerId).update({
+        'currentPool': pool,
+      });
     }
 
     // Navigate to the room page
@@ -109,9 +115,14 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     final newRoom = await roomsCollection.add({
       'currentOccupancy': 1, // Initialize with the customer
       'players': [customerId],
-      'pool':pool
+      'pool': pool,
       // You can add other room properties as needed
     });
+
+    // Update the user's currentPool in the 'users' collection
+    await usersCollection.doc(customerId).update({
+        'currentPool': pool,
+      });
 
     // Get the ID of the newly created room
     final roomId = newRoom.id;
@@ -125,6 +136,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     );
   }
 }
+
 
 
 
