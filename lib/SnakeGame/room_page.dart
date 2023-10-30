@@ -88,7 +88,7 @@ class PostCardWidget extends StatelessWidget {
     return Card(
       // Customize the card design as needed
       child: ListTile(
-        title: Text("Player"),
+        title: Text(playerData['handle'].toString()),
         subtitle: Text(playerData['score'].toString()),
         // Add other information from playerData
       ),

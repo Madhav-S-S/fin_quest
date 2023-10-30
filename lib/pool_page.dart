@@ -80,6 +80,8 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
   final firestore = FirebaseFirestore.instance;
   final roomsCollection = firestore.collection('${pool}_rooms');
   final usersCollection = firestore.collection('users');
+  final userDoc = await usersCollection.doc(customerId).get();
+      final handle = userDoc.get('handle');
 
   // Query rooms with available space
   final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 10).get();
@@ -100,6 +102,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       // Add the customer as a document with customerId as the name inside 'player_data'
       await roomsCollection.doc(roomId).collection('player_data').doc(customerId).set({
         'score': 0,
+        'handle': handle,
       });
 
       // Update the user's currentPool and currentRoom in the 'users' collection
@@ -127,6 +130,8 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     // Add the customer as a document with customerId as the name inside 'player_data' of the new room
     await newRoom.collection('player_data').doc(customerId).set({
       'score': 0,
+      'handle': handle,
+      
     });
 
     // Update the user's currentPool and currentRoom in the 'users' collection
@@ -144,7 +149,5 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     );
   }
 }
-
-
 
 }
