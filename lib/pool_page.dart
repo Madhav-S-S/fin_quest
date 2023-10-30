@@ -89,17 +89,23 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     final roomDoc = vacantRooms.docs[0];
     final roomId = roomDoc.id;
 
-    // Check if the customer's ID is not already in the 'players' array
-    if (!(roomDoc['players'] as List).contains(customerId)) {
-      // Update the room's occupancy and add the customer
+    // Check if a document with customerId exists inside the 'player_data' subcollection
+    final playerDataDoc = await roomsCollection.doc(roomId).collection('player_data').doc(customerId).get();
+    if (!playerDataDoc.exists) {
+      // Update the room's occupancy and add the customer to 'player_data'
       await roomsCollection.doc(roomId).update({
         'currentOccupancy': FieldValue.increment(1),
-        'players': FieldValue.arrayUnion([customerId]),
       });
-      
-      // Update the user's currentPool in the 'users' collection
+
+      // Add the customer as a document with customerId as the name inside 'player_data'
+      await roomsCollection.doc(roomId).collection('player_data').doc(customerId).set({
+        'score': 0,
+      });
+
+      // Update the user's currentPool and currentRoom in the 'users' collection
       await usersCollection.doc(customerId).update({
         'currentPool': pool,
+        'currentRoom': roomId,
       });
     }
 
@@ -114,18 +120,20 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     // Create a new room if no vacant rooms are available
     final newRoom = await roomsCollection.add({
       'currentOccupancy': 1, // Initialize with the customer
-      'players': [customerId],
       'pool': pool,
       // You can add other room properties as needed
     });
 
-    // Update the user's currentPool in the 'users' collection
-    await usersCollection.doc(customerId).update({
-        'currentPool': pool,
-      });
+    // Add the customer as a document with customerId as the name inside 'player_data' of the new room
+    await newRoom.collection('player_data').doc(customerId).set({
+      'score': 0,
+    });
 
-    // Get the ID of the newly created room
-    final roomId = newRoom.id;
+    // Update the user's currentPool and currentRoom in the 'users' collection
+    await usersCollection.doc(customerId).update({
+      'currentPool': pool,
+      'currentRoom': newRoom.id,
+    });
 
     // Navigate to the room page
     Navigator.push(
@@ -136,7 +144,6 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     );
   }
 }
-
 
 
 
