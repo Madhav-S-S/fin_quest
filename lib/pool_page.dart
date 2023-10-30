@@ -113,7 +113,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => roomPage(), // Pass the room ID to the RoomPage
+        builder: (context) => RoomPage(customerId: customerId,), // Pass the room ID to the RoomPage
       ),
     );
   } else {
@@ -139,7 +139,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => roomPage(), // Pass the room ID to the RoomPage
+        builder: (context) => RoomPage(customerId: customerId,), // Pass the room ID to the RoomPage
       ),
     );
   }

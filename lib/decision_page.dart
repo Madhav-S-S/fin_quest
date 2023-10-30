@@ -76,7 +76,7 @@ class _decisionPageState extends State<decisionPage> {
                   Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => roomPage(),
+                builder: (context) => RoomPage(customerId: widget.customerId),
               ),
             );
                 },
