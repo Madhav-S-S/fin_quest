@@ -37,43 +37,67 @@ class _RoomPageState extends State<RoomPage> {
           ),
         ),
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .doc(widget.customerId) // Replace customerId with the actual customer ID
-            .snapshots(),
-        builder: (context, userSnapshot) {
-          if (!userSnapshot.hasData) {
-            return CircularProgressIndicator(); // Loading indicator while data is being fetched.
-          }
-          final userData = userSnapshot.data?.data();
-          final currentRoom = userData!['currentRoom'];
-          final currentPool = userData['currentPool'];
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(widget.customerId)
+                  .snapshots(),
+              builder: (context, userSnapshot) {
+                if (!userSnapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final userData = userSnapshot.data?.data();
+                final currentRoom = userData!['currentRoom'];
+                final currentPool = userData['currentPool'];
 
-          return StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('${currentPool}_rooms')
-                .doc(currentRoom)
-                .collection('player_data')
-                .orderBy('score',descending: true)
-                .snapshots(),
-            builder: (context, playerDataSnapshot) {
-              if (!playerDataSnapshot.hasData) {
-                return CircularProgressIndicator(); // Loading indicator while data is being fetched.
-              }
-              final playerData = playerDataSnapshot.data?.docs;
+                return StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('${currentPool}_rooms')
+                      .doc(currentRoom)
+                      .collection('player_data')
+                      .orderBy('score', descending: true)
+                      .snapshots(),
+                  builder: (context, playerDataSnapshot) {
+                    if (!playerDataSnapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final playerData = playerDataSnapshot.data?.docs;
 
-              return ListView.builder(
-                itemCount: playerData!.length,
-                itemBuilder: (ctx, index) {
-                  final player = playerData[index].data();
-                  // Create a custom postcard widget and pass player data to it.
-                  return PostCardWidget(playerData: player);
-                },
-              );
-            },
-          );
-        },
+                    return ListView.builder(
+                      itemCount: playerData!.length,
+                      itemBuilder: (ctx, index) {
+                        final player = playerData[index].data();
+                        // Create a custom postcard widget and pass player data to it.
+                        return PostCardWidget(playerData: player);
+                      },
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          // Button at the bottom of the page
+          Container(
+            color: Colors.red,
+  width: double.infinity, // Set the width to fill the available space
+  child: TextButton(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    ),
+    onPressed: () {
+      // Handle the "Play" button action here.
+    },
+    child: Text("Play"),
+  ),
+)
+        ],
       ),
     );
   }
