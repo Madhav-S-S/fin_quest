@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   static final id_controller = TextEditingController();
   static final keyController = TextEditingController();
+  static final incrementController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,6 +124,48 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
+                  Container(
+                    width: 130, // Set the desired width
+                    child: TextField(
+                      controller: incrementController,
+                      decoration: InputDecoration(
+                        hintText: 'Mirror Coin ++',
+                        hintStyle: TextStyle(color: Colors.white),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.5),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  InkWell(
+                    onTap: () {
+                      // Add your onPressed action here
+                      // For example, you can navigate to another screen or perform an action.
+                    },
+                    child: Container(
+                      width: 50, // Adjust the size as needed
+                      height: 50, // Adjust the size as needed
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 0, 0), // Set the background color of the button
+                        shape: BoxShape.circle, // Create a circular shape
+                      ),
+                      child: Center(
+                        child: Text(
+                          '+',
+                          style: TextStyle(
+                            color: Colors.white, // Set the text color
+                            fontSize: 24, // Set the text size
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+
                 ],
               ),
             ),
