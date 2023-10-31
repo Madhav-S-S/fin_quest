@@ -143,15 +143,31 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   InkWell(
-                    onTap: () {
-                      // Add your onPressed action here
-                      // For example, you can navigate to another screen or perform an action.
+                    onTap: () async {
+                      try {
+                        // Increment the coin count in the database.
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(id_controller.text)
+                            .update({'m_coins': FieldValue.increment(int.parse(incrementController.text))});
+
+                        // Show a success message using a SnackBar.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Coins incremented successfully'),
+                            backgroundColor: Colors.green, // Customize the SnackBar's background color
+                          ),
+                        );
+                      } catch (e) {
+                        // Handle any errors that occurred during the database operation.
+                        print('Error: $e');
+                      }
                     },
                     child: Container(
                       width: 50, // Adjust the size as needed
                       height: 50, // Adjust the size as needed
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 0, 0), // Set the background color of the button
+                        color: Colors.blue, // Set the background color of the button
                         shape: BoxShape.circle, // Create a circular shape
                       ),
                       child: Center(
@@ -165,6 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   )
+
 
                 ],
               ),
