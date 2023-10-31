@@ -52,24 +52,24 @@ final String customerId;
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RoomPage(customerId: customerId,)));
   },
   style: ElevatedButton.styleFrom(
-    primary: Colors.blue, // Change the button background color to your preferred color
+    primary: Color.fromARGB(255, 255, 0, 0), // Change the button background color to your preferred color
     minimumSize: Size(150, 50), // Set the button's minimum size
   ),
   child: Row(
     mainAxisSize: MainAxisSize.min,
-    children: [
-      Icon(
-        Icons.refresh,
-        color: Colors.white,
-        size: 30.0,
-      ),
-      SizedBox(width: 10.0), // Add spacing between icon and text
+    children: [// Add spacing between icon and text
       Text(
-        "Try Again",
+        "Proceed",
         style: TextStyle(
           color: Colors.white,
           fontSize: 20.0,
         ),
+      ),
+      SizedBox(width: 10.0),
+      Icon(
+        Icons.arrow_forward_outlined,
+        color: Colors.white,
+        size: 30.0,
       ),
     ],
   ),
