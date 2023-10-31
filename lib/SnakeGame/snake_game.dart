@@ -3,13 +3,9 @@ import 'dart:math';
 import 'package:fin_quest/SnakeGame/game_over.dart';
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(MaterialApp(
-//     home: GamePage(),
-//   ));
-// }
-
 class GamePage extends StatefulWidget {
+  final String customerId;
+  GamePage({required this.customerId, Key? key}) : super(key: key);
   @override
   _GamePageState createState() => _GamePageState();
 }
@@ -112,7 +108,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
           setState(() {
             _hasStarted = !_hasStarted;
           });
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GameOver(score: _playerScore)));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GameOver(score: _playerScore,customerId: widget.customerId,)));
         }
       });
     }

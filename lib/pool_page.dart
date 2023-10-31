@@ -84,7 +84,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       final handle = userDoc.get('handle');
 
   // Query rooms with available space
-  final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 10).get();
+  final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 5).get();
 
   if (vacantRooms.docs.isNotEmpty) {
     // Find the first available room
@@ -116,7 +116,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => RoomPage(customerId: customerId,), // Pass the room ID to the RoomPage
+        builder: (context) => RoomPage(customerId: customerId), // Pass the room ID to the RoomPage
       ),
     );
   } else {
@@ -144,7 +144,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => RoomPage(customerId: customerId,), // Pass the room ID to the RoomPage
+        builder: (context) => RoomPage(customerId: customerId), // Pass the room ID to the RoomPage
       ),
     );
   }

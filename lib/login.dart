@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 50, // Adjust the size as needed
                       height: 50, // Adjust the size as needed
                       decoration: BoxDecoration(
-                        color: Colors.blue, // Set the background color of the button
+                        color: Color.fromARGB(255, 255, 0, 0), // Set the background color of the button
                         shape: BoxShape.circle, // Create a circular shape
                       ),
                       child: Center(

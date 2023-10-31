@@ -97,7 +97,7 @@ class _RoomPageState extends State<RoomPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => GamePage(),
+          builder: (context) => GamePage(customerId: widget.customerId),
         ),
       );
     },

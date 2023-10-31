@@ -1,3 +1,4 @@
+import 'package:fin_quest/SnakeGame/room_page.dart';
 import 'package:fin_quest/SnakeGame/snake_game.dart';
 import 'package:flutter/material.dart';
 
@@ -5,9 +6,9 @@ class GameOver extends StatelessWidget {
 
   final int score;
 
-  GameOver({
-    required this.score
-  });
+final String customerId;
+  GameOver({required this.customerId,required this.score, Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class GameOver extends StatelessWidget {
 
             ElevatedButton(
   onPressed: () {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GamePage()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RoomPage(customerId: customerId,)));
   },
   style: ElevatedButton.styleFrom(
     primary: Colors.blue, // Change the button background color to your preferred color
