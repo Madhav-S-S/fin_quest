@@ -77,35 +77,35 @@ class _decisionPageState extends State<decisionPage> {
               ElevatedButton(
                 onPressed: () async {
                   //retrieve currentPool from collection 'users', document customerId, field currentPool
-try {
-  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-      .collection('users')
-      .doc(widget.customerId)
-      .get();
+              try {
+                DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(widget.customerId)
+                    .get();
 
-  if (userSnapshot.exists) {
-    // Check if the document with the given customer ID exists.
-    dynamic currentPool = userSnapshot.get('currentPool');
-    dynamic currentRoom = userSnapshot.get('currentRoom');
+                if (userSnapshot.exists) {
+                  // Check if the document with the given customer ID exists.
+                  dynamic currentPool = userSnapshot.get('currentPool');
+                  dynamic currentRoom = userSnapshot.get('currentRoom');
 
-    if (currentPool != null && currentRoom != null) {
-      // The 'currentPool' and 'currentRoom' fields exist and are not null.
-      // Assign them to their respective variables.
-      String pool = currentPool.toString();
-      String room = currentRoom.toString();
+                  if (currentPool != null && currentRoom != null) {
+                    // The 'currentPool' and 'currentRoom' fields exist and are not null.
+                    // Assign them to their respective variables.
+                    String pool = currentPool.toString();
+                    String room = currentRoom.toString();
 
-      // Now, 'pool' and 'room' contain the values of 'currentPool' and 'currentRoom'.
-      // You can use these variables as needed in your code.
-    } else {
-      // Handle the case where either 'currentPool' or 'currentRoom' is null.
-    }
-  } else {
-    // Handle the case where the document with the given customer ID does not exist.
-  }
-} catch (e) {
-  // Handle any errors that may occur during the retrieval.
-  print('Error: $e');
-}
+                    // Now, 'pool' and 'room' contain the values of 'currentPool' and 'currentRoom'.
+                    // You can use these variables as needed in your code.
+                  } else {
+                    // Handle the case where either 'currentPool' or 'currentRoom' is null.
+                  }
+                } else {
+                  // Handle the case where the document with the given customer ID does not exist.
+                }
+              } catch (e) {
+                // Handle any errors that may occur during the retrieval.
+                print('Error: $e');
+              }
 
                   Navigator.push(
               context,

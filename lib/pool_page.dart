@@ -131,6 +131,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     await newRoom.collection('player_data').doc(customerId).set({
       'score': 0,
       'handle': handle,
+      'game_over': false
       
     });
 
