@@ -10,7 +10,7 @@ class PoolSelectionPage extends StatefulWidget {
 }
 
 class _PoolSelectionPageState extends State<PoolSelectionPage> {
-  final List<String> pools = ['100', '200', '500'];
+  final List<String> pools = ['10', '20', '50'];
 
   @override
   Widget build(BuildContext context) {
