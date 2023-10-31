@@ -10,7 +10,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   static final id_controller = TextEditingController();
-
+  static final keyController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   TextField(
-                    controller: id_controller,
+                    controller: keyController,
                     decoration: InputDecoration(
                       hintText: 'Encryption Key',
                       hintStyle: TextStyle(color: Colors.white),
@@ -133,15 +133,21 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-    // Get the customer ID from the text field.
-    String customerId = id_controller.text;
+  // Get the customer ID from the text field.
+  String customerId = id_controller.text;
+  String key = keyController.text; // Assuming you have a keyController.
 
-    // Create a reference to the collection 'user'.
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+  // Create a reference to the collection 'users'.
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-    // Check if the document with the given customer ID exists.
-    DocumentSnapshot snapshot = await users.doc(customerId).get();
-    if (snapshot.exists) {
+  // Check if the document with the given customer ID exists.
+  DocumentSnapshot snapshot = await users.doc(customerId).get();
+
+  if (snapshot.exists) {
+    // Check if the 'key' field in the document matches the value from keyController.
+    final Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+  
+  if (data != null && data['key'] == key) {
       // Navigate to the home page.
       Navigator.push(
         context,
@@ -150,12 +156,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      // Show an error message.
+      // Show an error message if 'key' doesn't match.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('The customer ID does not exist.'),
+          content: Text('Invalid key for the customer ID.'),
         ),
       );
     }
+  } else {
+    // Show an error message if the customer ID does not exist.
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('The customer ID does not exist.'),
+      ),
+    );
   }
+}
+
 }
