@@ -1,3 +1,4 @@
+import 'package:fin_quest/create_player.dart';
 import 'package:fin_quest/home.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: Alignment.topCenter, // Align text to the top
                     child: Text(
-                      'Bank Connecting to GameZone...',
+                      'Mirror+ Connecting to GameZone...',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -57,9 +58,22 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 20),
+                  TextField(
+                    controller: id_controller,
+                    decoration: InputDecoration(
+                      hintText: 'Encryption Code',
+                      hintStyle: TextStyle(color: Colors.white),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.5),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 20),
                   Container(
-                    width: double.infinity,
+                    width: 100,
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
@@ -74,7 +88,35 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
+                        primary: Color.fromARGB(255, 255, 0, 0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CreateUserPage(),
+              ),
+            );
+                      },
+                      child: Text(
+                        'Create New Player',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 255, 0, 0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
