@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   TextField(
                     controller: id_controller,
                     decoration: InputDecoration(
-                      hintText: 'Encryption Code',
+                      hintText: 'Encryption Key',
                       hintStyle: TextStyle(color: Colors.white),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.5),
