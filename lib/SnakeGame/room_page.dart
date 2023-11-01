@@ -169,16 +169,7 @@ class _RoomPageState extends State<RoomPage> {
       FirebaseFirestore.instance.collection('users').doc(topPlayers[0]['customerId']).update({'m_coins': FieldValue.increment(firstPlayerShare),});
       FirebaseFirestore.instance.collection('users').doc(topPlayers[1]['customerId']).update({'m_coins': FieldValue.increment(secondPlayerShare),});
       FirebaseFirestore.instance.collection('users').doc(topPlayers[2]['customerId']).update({'m_coins': FieldValue.increment(thirdPlayerShare),});
-    //             'm_coins': FieldValue.increment(share),
-    //           });
-    // for (int i = 0; i < 3; i++) {
-    //           final share = i == 0 ? firstPlayerShare : (i == 1 ? secondPlayerShare : thirdPlayerShare);
-
-    //           // Update player's m_coins
-    //           FirebaseFirestore.instance.collection('users').doc(topPlayers[i]['customerId']).update({
-    //             'm_coins': FieldValue.increment(share),
-    //           });
-    //         }
+      await roomRef.update({'result_published': true});
     }
     AlertDialog alertDialog = AlertDialog(
       backgroundColor: Colors.red,
