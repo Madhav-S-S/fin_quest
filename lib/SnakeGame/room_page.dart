@@ -145,10 +145,61 @@ class _RoomPageState extends State<RoomPage> {
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
-          onPressed: () {
-            
+          onPressed: () async {
+  final currentRoom = userData!['currentRoom'];
+  final currentPool = userData!['currentPool'];
 
-          },
+  final roomRef = FirebaseFirestore.instance.collection('$currentPool' + '_rooms').doc(currentRoom);
+
+  final playerDataQuery = await roomRef.collection('player_data').where('game_over', isEqualTo: true).get();
+  final totalPool = await roomRef.get().then((roomDoc) => roomDoc.data()?['total_pool']);
+
+  final playerDataList = playerDataQuery.docs.map((doc) => doc.data()).toList();
+  playerDataList.sort((a, b) => b['score'].compareTo(a['score']));
+
+  if (playerDataList.isNotEmpty) {
+    // Calculate shares for top 3 players
+    final topPlayers = playerDataList.take(3).toList();
+
+    final firstPlayerShare = (totalPool! * 0.5).toInt();
+    final secondPlayerShare = (totalPool! * 0.3).toInt();
+    final thirdPlayerShare = (totalPool! * 0.2).toInt();
+
+    // Show a popup with the top 3 players, their scores, and shares
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Top Players and Shares'),
+          content: Column(
+            children: <Widget>[
+              Text('1st Place: ${topPlayers[0]['handle']}, Score: ${topPlayers[0]['score']}, Share: $firstPlayerShare'),
+              Text('2nd Place: ${topPlayers[1]['handle']}, Score: ${topPlayers[1]['score']}, Share: $secondPlayerShare'),
+              Text('3rd Place: ${topPlayers[2]['handle']}, Score: ${topPlayers[2]['score']}, Share: $thirdPlayerShare'),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  } else {
+    // Show a message if no players with 'game_over' set to true are found
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("No players with 'game_over' set to true."),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
+},
+
           child: Text("Result"),
         ),
       ),
