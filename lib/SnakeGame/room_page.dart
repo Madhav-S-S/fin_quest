@@ -331,7 +331,7 @@ showDialog(
     // Show a message if no players with 'game_over' set to true are found
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("No players with 'game_over' set to true."),
+        content: Text("Wait for other players to complete the game."),
         duration: Duration(seconds: 3),
       ),
     );
