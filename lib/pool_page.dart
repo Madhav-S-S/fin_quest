@@ -110,6 +110,10 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
         'currentPool': pool,
         'currentRoom': roomId,
       });
+      //substract ${pool} m_coins of the user 
+      await usersCollection.doc(customerId).update({
+        'm_coins': FieldValue.increment(-int.parse(pool)),
+      });
     }
 
     // Navigate to the room page
