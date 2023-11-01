@@ -118,8 +118,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SnakeGameFlutter', style: TextStyle(color: Colors.white, fontSize: 20.0)),
-        centerTitle: false,
+        title: Text('Snake', style: TextStyle(color: Colors.white, fontSize: 20.0)),
+        centerTitle: true,
         backgroundColor: Colors.redAccent,
         actions: <Widget>[
           Center(
