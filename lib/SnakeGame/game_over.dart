@@ -74,7 +74,7 @@ final String customerId;
                           .collection('player_data')
                           .doc(customerId)
                           .update({'score': score});
-
+                      
                       // After updating the score, you can navigate to the RoomPage
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(

@@ -103,6 +103,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       await roomsCollection.doc(roomId).collection('player_data').doc(customerId).set({
         'score': 0,
         'handle': handle,
+        'game_over': false,
       });
 
       // Update the user's currentPool and currentRoom in the 'users' collection
@@ -135,7 +136,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     await newRoom.collection('player_data').doc(customerId).set({
       'score': 0,
       'handle': handle,
-      'game_over': false
+      'game_over': false,
       
     });
 
