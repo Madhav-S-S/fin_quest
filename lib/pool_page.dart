@@ -134,6 +134,7 @@ Future<void> checkAndEnterRoom(BuildContext context, String customerId, String p
         'currentOccupancy': 1, // Initialize with the customer
         'pool': pool,
         'total_pool': int.parse(pool),
+        'result_published': false,
         // You can add other room properties as needed
       });
 
