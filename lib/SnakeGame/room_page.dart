@@ -150,7 +150,8 @@ class _RoomPageState extends State<RoomPage> {
   final currentPool = userData!['currentPool'];
 
   final roomRef = FirebaseFirestore.instance.collection('$currentPool' + '_rooms').doc(currentRoom);
-
+  final roomDoc = await roomRef.get();
+  final resultPublished = roomDoc.data()?['result_published'];
   final playerDataQuery = await roomRef.collection('player_data').where('game_over', isEqualTo: true).get();
   final totalPool = await roomRef.get().then((roomDoc) => roomDoc.data()?['total_pool']);
 
@@ -164,8 +165,21 @@ class _RoomPageState extends State<RoomPage> {
     final firstPlayerShare = (totalPool! * 0.5).toInt();
     final secondPlayerShare = (totalPool! * 0.3).toInt();
     final thirdPlayerShare = (totalPool! * 0.2).toInt();
+    if(resultPublished == false){
+      FirebaseFirestore.instance.collection('users').doc(topPlayers[0]['customerId']).update({'m_coins': FieldValue.increment(firstPlayerShare),});
+      FirebaseFirestore.instance.collection('users').doc(topPlayers[1]['customerId']).update({'m_coins': FieldValue.increment(secondPlayerShare),});
+      FirebaseFirestore.instance.collection('users').doc(topPlayers[2]['customerId']).update({'m_coins': FieldValue.increment(thirdPlayerShare),});
+    //             'm_coins': FieldValue.increment(share),
+    //           });
+    // for (int i = 0; i < 3; i++) {
+    //           final share = i == 0 ? firstPlayerShare : (i == 1 ? secondPlayerShare : thirdPlayerShare);
 
-    // Show a popup with the top 3 players, their scores, and shares
+    //           // Update player's m_coins
+    //           FirebaseFirestore.instance.collection('users').doc(topPlayers[i]['customerId']).update({
+    //             'm_coins': FieldValue.increment(share),
+    //           });
+    //         }
+    }
     AlertDialog alertDialog = AlertDialog(
       backgroundColor: Colors.red,
   title: Text(
