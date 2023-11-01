@@ -89,52 +89,73 @@ class _RoomPageState extends State<RoomPage> {
             ),
           ),
           // Button at the bottom of the page
-          Container(
-            color: Colors.red,
-            width: double.infinity,
-            child: TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              ),
-              onPressed: () {
-                if (userData != null) { // Check if userData is available
-                  final currentPool = userData!['currentPool'];
-                  final currentRoom = userData!['currentRoom'];
+          Row(
+  children: [
+    Expanded(
+      child: Container(
+        color: Colors.red,
+        child: TextButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          ),
+          onPressed: () {
+            if (userData != null) { // Check if userData is available
+              final currentPool = userData!['currentPool'];
+              final currentRoom = userData!['currentRoom'];
 
-                  FirebaseFirestore.instance
-                      .collection('$currentPool' + '_rooms')
-                      .doc(currentRoom)
-                      .collection('player_data')
-                      .doc(widget.customerId)
-                      .get()
-                      .then((playerDoc) {
-                    if (playerDoc.exists) {
-                      final gameStatus = playerDoc.data()?['game_over'];
+              FirebaseFirestore.instance
+                  .collection('$currentPool' + '_rooms')
+                  .doc(currentRoom)
+                  .collection('player_data')
+                  .doc(widget.customerId)
+                  .get()
+                  .then((playerDoc) {
+                if (playerDoc.exists) {
+                  final gameStatus = playerDoc.data()?['game_over'];
 
-                      if (gameStatus == false) {
-                        // Proceed to the game
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GamePage(customerId: widget.customerId),
-                          ),
-                        );
-                      } else {
-                        // Show a snackbar indicating that the player has already played
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("You have already played the game."),
-                            duration: Duration(seconds: 3),
-                          ),
-                        );
-                      }
-                    }
-                  });
+                  if (gameStatus == false) {
+                    // Proceed to the game
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GamePage(customerId: widget.customerId),
+                      ),
+                    );
+                  } else {
+                    // Show a snackbar indicating that the player has already played
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("You have already played the game."),
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                  }
                 }
-              },
-              child: Text("Play"),
-            ),
-          )
+              });
+            }
+          },
+          child: Text("Play"),
+        ),
+      ),
+    ),
+    Expanded(
+      child: Container(
+        color: const Color.fromARGB(255, 181, 34, 23),
+        child: TextButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          ),
+          onPressed: () {
+            
+
+          },
+          child: Text("Result"),
+        ),
+      ),
+    ),
+  ],
+)
+
         ],
       ),
     );

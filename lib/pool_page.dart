@@ -97,6 +97,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
       // Update the room's occupancy and add the customer to 'player_data'
       await roomsCollection.doc(roomId).update({
         'currentOccupancy': FieldValue.increment(1),
+        'total_pool':FieldValue.increment(int.parse(pool)),
       });
 
       // Add the customer as a document with customerId as the name inside 'player_data'
@@ -129,6 +130,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
     final newRoom = await roomsCollection.add({
       'currentOccupancy': 1, // Initialize with the customer
       'pool': pool,
+      'total_pool': int.parse(pool),
       // You can add other room properties as needed
     });
 
