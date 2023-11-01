@@ -166,29 +166,161 @@ class _RoomPageState extends State<RoomPage> {
     final thirdPlayerShare = (totalPool! * 0.2).toInt();
 
     // Show a popup with the top 3 players, their scores, and shares
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Top Players and Shares'),
-          content: Column(
-            children: <Widget>[
-              Text('1st Place: ${topPlayers[0]['handle']}, Score: ${topPlayers[0]['score']}, Share: $firstPlayerShare'),
-              Text('2nd Place: ${topPlayers[1]['handle']}, Score: ${topPlayers[1]['score']}, Share: $secondPlayerShare'),
-              Text('3rd Place: ${topPlayers[2]['handle']}, Score: ${topPlayers[2]['score']}, Share: $thirdPlayerShare'),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+    AlertDialog alertDialog = AlertDialog(
+  title: Text(
+    'Top Players and Shares',
+    style: TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  content: Column(
+    children: [
+      Column(
+        children: [
+          Text(
+            '1st Place',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 28,
+              color: Colors.black,
             ),
-          ],
-        );
-      },
-    );
+          ),
+          Text(
+            topPlayers[0]['handle'],
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            'Score: ${topPlayers[0]['score']}',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 18,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            '$firstPlayerShare Coins Gained..!',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: 60,
+          ),
+          Text(
+            '2nd Place',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 28,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            topPlayers[1]['handle'],
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            'Score: ${topPlayers[1]['score']}',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 18,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            '$secondPlayerShare Coins Gained..!',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: 60,
+          ),
+          Text(
+            '3rd Place',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 28,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            topPlayers[2]['handle'],
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            'Score: ${topPlayers[2]['score']}',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 18,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            '$thirdPlayerShare Coins Gained..!',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: 60,
+          ),
+        ],
+      ),
+      // Repeat the above structure for 2nd and 3rd place or use a loop if applicable.
+
+      Padding(
+        padding: const EdgeInsets.only(bottom: 20.0),
+        child: TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            'Close',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 18,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ),
+    ],
+  ),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10.0),
+  ),
+);
+
+showDialog(
+  context: context,
+  builder: (context) {
+    return alertDialog;
+  },
+);
+
+
+
   } else {
     // Show a message if no players with 'game_over' set to true are found
     ScaffoldMessenger.of(context).showSnackBar(
