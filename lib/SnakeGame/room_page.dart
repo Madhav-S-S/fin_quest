@@ -167,9 +167,11 @@ class _RoomPageState extends State<RoomPage> {
 
     // Show a popup with the top 3 players, their scores, and shares
     AlertDialog alertDialog = AlertDialog(
+      backgroundColor: Colors.red,
   title: Text(
     'Top Players and Shares',
     style: TextStyle(
+      color: Color.fromARGB(255, 255, 255, 255),
       fontFamily: 'Roboto',
       fontSize: 20,
       fontWeight: FontWeight.bold,
@@ -184,7 +186,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 28,
-              color: Colors.black,
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -193,7 +195,7 @@ class _RoomPageState extends State<RoomPage> {
               fontFamily: 'Roboto',
               fontWeight: FontWeight.bold,
               fontSize: 24,
-              color: Colors.black,
+              color: Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -201,7 +203,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 18,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -209,7 +211,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 20,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           SizedBox(
@@ -220,7 +222,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 28,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -229,7 +231,7 @@ class _RoomPageState extends State<RoomPage> {
               fontFamily: 'Roboto',
               fontWeight: FontWeight.bold,
               fontSize: 24,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -237,7 +239,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 18,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -245,7 +247,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 20,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           SizedBox(
@@ -256,7 +258,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 28,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -265,7 +267,7 @@ class _RoomPageState extends State<RoomPage> {
               fontFamily: 'Roboto',
               fontWeight: FontWeight.bold,
               fontSize: 24,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -273,7 +275,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 18,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           Text(
@@ -281,7 +283,7 @@ class _RoomPageState extends State<RoomPage> {
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 20,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           SizedBox(
@@ -294,16 +296,20 @@ class _RoomPageState extends State<RoomPage> {
       Padding(
         padding: const EdgeInsets.only(bottom: 20.0),
         child: TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            'Close',
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 18,
-              color: Colors.black,
-            ),
-          ),
-        ),
+  onPressed: () => Navigator.of(context).pop(),
+  style: TextButton.styleFrom(
+    backgroundColor: Colors.white, // Background color
+  ),
+  child: Text(
+    'Close',
+    style: TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 18,
+      color: Colors.black, // Text color
+    ),
+  ),
+),
+
       ),
     ],
   ),
