@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class RoomPage extends StatefulWidget {
   final String customerId;
+
   RoomPage({required this.customerId, Key? key}) : super(key: key);
 
   @override
@@ -11,6 +12,8 @@ class RoomPage extends StatefulWidget {
 }
 
 class _RoomPageState extends State<RoomPage> {
+  Map<String, dynamic>? userData; // Define userData variable
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +55,10 @@ class _RoomPageState extends State<RoomPage> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                final userData = userSnapshot.data?.data();
+                userData = userSnapshot.data?.data(); // Assign userData here
+
                 final currentRoom = userData!['currentRoom'];
-                final currentPool = userData['currentPool'];
+                final currentPool = userData!['currentPool'];
 
                 return StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -87,23 +91,50 @@ class _RoomPageState extends State<RoomPage> {
           // Button at the bottom of the page
           Container(
             color: Colors.red,
-  width: double.infinity, // Set the width to fill the available space
-  child: TextButton(
-    style: ButtonStyle(
-      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    ),
-    onPressed: () {
-      // Navigate to the game page
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => GamePage(customerId: widget.customerId),
-        ),
-      );
-    },
-    child: Text("Play"),
-  ),
-)
+            width: double.infinity,
+            child: TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
+              onPressed: () {
+                if (userData != null) { // Check if userData is available
+                  final currentPool = userData!['currentPool'];
+                  final currentRoom = userData!['currentRoom'];
+
+                  FirebaseFirestore.instance
+                      .collection('$currentPool' + '_rooms')
+                      .doc(currentRoom)
+                      .collection('player_data')
+                      .doc(widget.customerId)
+                      .get()
+                      .then((playerDoc) {
+                    if (playerDoc.exists) {
+                      final gameStatus = playerDoc.data()?['game_over'];
+
+                      if (gameStatus == false) {
+                        // Proceed to the game
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GamePage(customerId: widget.customerId),
+                          ),
+                        );
+                      } else {
+                        // Show a snackbar indicating that the player has already played
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("You have already played the game."),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      }
+                    }
+                  });
+                }
+              },
+              child: Text("Play"),
+            ),
+          )
         ],
       ),
     );

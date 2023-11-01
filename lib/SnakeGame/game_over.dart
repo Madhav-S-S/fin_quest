@@ -74,7 +74,13 @@ final String customerId;
                           .collection('player_data')
                           .doc(customerId)
                           .update({'score': score});
-                      
+
+                      await FirebaseFirestore.instance
+                          .collection('$pool' + '_rooms')
+                          .doc(room)
+                          .collection('player_data')
+                          .doc(customerId)
+                          .update({'game_over': true});
                       // After updating the score, you can navigate to the RoomPage
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
