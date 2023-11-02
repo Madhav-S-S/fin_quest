@@ -201,25 +201,21 @@ class _HomeState extends State<Home> {
             _buildGameCard(
               gameName: "Snake",
               imageURL: "assets/images/snake.webp",
-              page : PoolSelectionPage(customerId: widget.customerId,),
               customerId: widget.customerId,
             ),
             _buildGameCard(
               gameName: "Financial Quiz",
               imageURL: "assets/images/bank quiz.jpg",
-              page : PoolSelectionPage(customerId: widget.customerId,),
               customerId: widget.customerId,
             ),
             _buildGameCard(
               gameName: "Investment Simulator",
               imageURL: "assets/images/sharemarket_sim.webp",
-              page : PoolSelectionPage(customerId: widget.customerId,),
               customerId: widget.customerId,
             ),
             _buildGameCard(
               gameName: "Monopoly",
               imageURL: "assets/images/monopoly.webp",
-              page : PoolSelectionPage(customerId: widget.customerId,),
               customerId: widget.customerId,
             ),
           ],
@@ -303,7 +299,7 @@ class _HomeState extends State<Home> {
               Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => decisionPage(customerId: customerId),
+                builder: (context) => decisionPage(customerId: customerId,gameName : gameName),
               ),
             );
             },

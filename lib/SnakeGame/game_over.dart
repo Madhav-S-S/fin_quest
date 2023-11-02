@@ -84,7 +84,7 @@ final String customerId;
                       // After updating the score, you can navigate to the RoomPage
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => RoomPage(customerId: customerId),
+                          builder: (context) => RoomPage(customerId: customerId,gameName: 'Snake',),
                         ),
                       );
                     } else {

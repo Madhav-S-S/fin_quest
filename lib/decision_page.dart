@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 
 class decisionPage extends StatefulWidget {
   final String customerId;
-  decisionPage({required this.customerId, Key? key}) : super(key: key);
+  final String gameName;
+  decisionPage({required this.customerId,required this.gameName, Key? key}) : super(key: key);
 
   @override
   _decisionPageState createState() => _decisionPageState();
@@ -53,7 +54,7 @@ class _decisionPageState extends State<decisionPage> {
                   Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PoolSelectionPage(customerId: widget.customerId),
+                builder: (context) => PoolSelectionPage(customerId: widget.customerId,gameName: widget.gameName,),
               ),
             );
                 },
@@ -110,7 +111,7 @@ class _decisionPageState extends State<decisionPage> {
                   Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RoomPage(customerId: widget.customerId),
+                builder: (context) => RoomPage(customerId: widget.customerId,gameName: widget.gameName,),
               ),
             );
                 },

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class RoomPage extends StatefulWidget {
   final String customerId;
-
-  RoomPage({required this.customerId, Key? key}) : super(key: key);
+  final String gameName;
+  RoomPage({required this.customerId,required this.gameName, Key? key}) : super(key: key);
 
   @override
   _RoomPageState createState() => _RoomPageState();

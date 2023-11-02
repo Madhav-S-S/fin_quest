@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class PoolSelectionPage extends StatefulWidget {
   final String customerId;
-  PoolSelectionPage({required this.customerId, Key? key}) : super(key: key);
+  final String gameName;
+  PoolSelectionPage({required this.customerId,required this.gameName, Key? key}) : super(key: key);
   @override
   _PoolSelectionPageState createState() => _PoolSelectionPageState();
 }
@@ -125,7 +126,7 @@ Future<void> checkAndEnterRoom(BuildContext context, String customerId, String p
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => RoomPage(customerId: customerId), // Pass the room ID to the RoomPage
+          builder: (context) => RoomPage(customerId: customerId,gameName : widget.gameName), // Pass the room ID to the RoomPage
         ),
       );
     } else {
@@ -160,7 +161,7 @@ Future<void> checkAndEnterRoom(BuildContext context, String customerId, String p
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => RoomPage(customerId: customerId), // Pass the room ID to the RoomPage
+          builder: (context) => RoomPage(customerId: customerId,gameName : widget.gameName), // Pass the room ID to the RoomPage
         ),
       );
     }
