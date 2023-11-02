@@ -48,7 +48,7 @@ class _decisionPageState extends State<decisionPage> {
           padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 150),
+              SizedBox(height: 100),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -133,6 +133,38 @@ class _decisionPageState extends State<decisionPage> {
               ),
 
               SizedBox(height: 40),
+              ElevatedButton(
+  onPressed: () async {
+    try {
+      // Clear 'currentPool' and 'currentRoom' fields in the Firestore collection
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.customerId)
+          .update({
+        'currentPool': null,
+        'currentRoom': null,
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  },
+  style: ElevatedButton.styleFrom(
+    primary: Colors.white.withOpacity(0.3),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    minimumSize: Size(300, 150),
+  ),
+  child: Text(
+    "Clear Room",
+    style: TextStyle(
+      fontSize: 30,
+      fontFamily: "Poppins",
+      color: Colors.white,
+    ),
+  ),
+),
+
             ],
           ),
         ),
