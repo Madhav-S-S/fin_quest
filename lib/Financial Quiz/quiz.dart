@@ -1,3 +1,4 @@
+import 'package:fin_quest/SnakeGame/room_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -65,10 +66,50 @@ class _QuizPageState extends State<QuizPage> {
         content: Text('Score: $score/10'),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            },
+            onPressed: () async {
+                  // Retrieve 'currentPool' and 'currentRoom' from the 'users' document
+                  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(widget.customerId)
+                      .get();
+
+                  if (userSnapshot.exists) {
+                    dynamic currentPool = userSnapshot.get('currentPool');
+                    dynamic currentRoom = userSnapshot.get('currentRoom');
+
+                    if (currentPool != null && currentRoom != null) {
+                      String pool = currentPool.toString();
+                      String room = currentRoom.toString();
+
+                      // Now, you have 'pool' and 'room' containing the values of 'currentPool' and 'currentRoom'.
+
+                      // Update the 'score' field in the 'player_data' subcollection
+                      await FirebaseFirestore.instance
+                          .collection('$pool' + '_rooms')
+                          .doc(room)
+                          .collection('player_data')
+                          .doc(widget.customerId)
+                          .update({'score': score});
+
+                      await FirebaseFirestore.instance
+                          .collection('$pool' + '_rooms')
+                          .doc(room)
+                          .collection('player_data')
+                          .doc(widget.customerId)
+                          .update({'game_over': true});
+                      // After updating the score, you can navigate to the RoomPage
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => RoomPage(customerId: widget.customerId,gameName: 'Financial Quiz',),
+                        ),
+                      );
+                    } else {
+                      // Handle the case where either 'currentPool' or 'currentRoom' is null.
+                    }
+                  } else {
+                    // Handle the case where the document with the given customer ID does not exist.
+                  }
+              },
             child: Text('OK'),
           ),
         ],
