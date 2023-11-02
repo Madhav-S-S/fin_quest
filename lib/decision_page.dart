@@ -14,8 +14,6 @@ class decisionPage extends StatefulWidget {
 }
 
 class _decisionPageState extends State<decisionPage> {
-  String pool = '';
-  String room = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,7 +133,30 @@ class _decisionPageState extends State<decisionPage> {
               SizedBox(height: 40),
               ElevatedButton(
   onPressed: () async {
+    String currentPool = '';  // Initialize with default values
+    String currentRoom = '';  // Initialize with default values
+
     try {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.customerId)
+          .get();
+
+      if (userSnapshot.exists) {
+        currentPool = userSnapshot.get('currentPool') ?? '';  // Update if found
+        currentRoom = userSnapshot.get('currentRoom') ?? '';  // Update if found
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+
+    // Now, you can use currentPool and currentRoom in your code.
+    // Check if they are not empty or null before using them.
+
+    if (currentPool.isNotEmpty && currentRoom.isNotEmpty) {
+      // Call the function with the parameters
+      await removePlayerDataFromRoom(widget.customerId, currentPool, currentRoom);
+
       // Clear 'currentPool' and 'currentRoom' fields in the Firestore collection
       await FirebaseFirestore.instance
           .collection('users')
@@ -144,8 +165,6 @@ class _decisionPageState extends State<decisionPage> {
         'currentPool': null,
         'currentRoom': null,
       });
-    } catch (e) {
-      print('Error: $e');
     }
   },
   style: ElevatedButton.styleFrom(
@@ -165,6 +184,8 @@ class _decisionPageState extends State<decisionPage> {
   ),
 ),
 
+
+
             ],
           ),
         ),
@@ -175,4 +196,17 @@ class _decisionPageState extends State<decisionPage> {
 
     );
   }
+  removePlayerDataFromRoom(String customerId, String currentPool, String currentRoom) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('${currentPool}_rooms')
+        .doc(currentRoom)
+        .collection('player_data')
+        .doc(customerId)
+        .delete();
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
 }
