@@ -136,6 +136,7 @@ Future<void> checkAndEnterRoom(BuildContext context, String customerId, String p
         'pool': pool,
         'total_pool': int.parse(pool),
         'result_published': false,
+        'gameName': widget.gameName,
         // You can add other room properties as needed
       });
 

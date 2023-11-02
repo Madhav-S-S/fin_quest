@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fin_quest/Financial%20Quiz/quiz.dart';
 import 'package:fin_quest/SnakeGame/snake_game.dart';
 import 'package:flutter/material.dart';
 
@@ -124,12 +125,20 @@ class _RoomPageState extends State<RoomPage> {
       
                     if (gameStatus == false) {
                       // Proceed to the game
+                      if(widget.gameName == 'Snake'){
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => SnakeGame(customerId: widget.customerId),
                         ),
                       );
+                      }else if(widget.gameName == 'Financial Quiz'){
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuizPage(customerId: widget.customerId),
+                        ),
+                      );}
                     } else {
                       // Show a snackbar indicating that the player has already played
                       ScaffoldMessenger.of(context).showSnackBar(
