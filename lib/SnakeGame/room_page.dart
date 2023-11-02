@@ -127,7 +127,7 @@ class _RoomPageState extends State<RoomPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => GamePage(customerId: widget.customerId),
+                          builder: (context) => SnakeGame(customerId: widget.customerId),
                         ),
                       );
                     } else {

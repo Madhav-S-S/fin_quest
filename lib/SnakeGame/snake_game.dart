@@ -3,14 +3,14 @@ import 'dart:math';
 import 'package:fin_quest/SnakeGame/game_over.dart';
 import 'package:flutter/material.dart';
 
-class GamePage extends StatefulWidget {
+class SnakeGame extends StatefulWidget {
   final String customerId;
-  GamePage({required this.customerId, Key? key}) : super(key: key);
+  SnakeGame({required this.customerId, Key? key}) : super(key: key);
   @override
-  _GamePageState createState() => _GamePageState();
+  _SnakeGameState createState() => _SnakeGameState();
 }
 
-class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
+class _SnakeGameState extends State<SnakeGame> with TickerProviderStateMixin {
   late int _playerScore;
   late bool _hasStarted;
   late Animation _snakeAnimation;
