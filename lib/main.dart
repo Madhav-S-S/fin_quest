@@ -1,3 +1,4 @@
+import 'package:fin_quest/Financial%20Quiz/quiz_home.dart';
 import 'package:fin_quest/home.dart';
 import 'package:fin_quest/login.dart';
 import 'package:fin_quest/SnakeGame/snake_game.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login App',
-      home: LoginPage(),
+      home: QuizHome(),
       routes: {
         '/login': (context) => LoginPage(),
       },
