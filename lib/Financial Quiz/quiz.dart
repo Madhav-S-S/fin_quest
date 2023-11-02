@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(
+    home: QuizPage(),
+    theme: ThemeData.light(),
+    darkTheme: ThemeData.dark(),
+  ));
+}
 
 class QuizPage extends StatefulWidget {
   @override
@@ -104,21 +113,43 @@ class _QuizPageState extends State<QuizPage> {
                       ListView.builder(
                         itemCount: 4,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black12),
-                            borderRadius: BorderRadius.circular(5),
+                        itemBuilder: (context, index) => Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: ListTile(
-                            title: GestureDetector(
-                              onTap: () => handleOptionSelection(index),
-                              child: Text(
-                                questions != null &&
-                                    questions[currentQuestionIndex] != null &&
-                                    questions[currentQuestionIndex]['options'] != null
-                                    ? questions[currentQuestionIndex]['options'][index]
-                                    : '',
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                          elevation: 5,
+                          margin: EdgeInsets.all(8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [Color.fromARGB(255, 66, 132, 186), const Color.fromARGB(255, 243, 177, 33)], // Adjust the colors as needed
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color.fromARGB(255, 142, 33, 243),
+                                  blurRadius: 5,
+                                  spreadRadius: 2,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              title: GestureDetector(
+                                onTap: () => handleOptionSelection(index),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    questions != null &&
+                                            questions[currentQuestionIndex] != null &&
+                                            questions[currentQuestionIndex]['options'] != null
+                                        ? questions[currentQuestionIndex]['options'][index]
+                                        : '',
+                                    style: TextStyle(fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
