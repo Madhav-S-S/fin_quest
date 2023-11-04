@@ -13,7 +13,7 @@ class RoomPage extends StatefulWidget {
 }
 
 class _RoomPageState extends State<RoomPage> {
-  Map<String, dynamic>? userData; // Define userData variable
+  Map<String, dynamic>? userData; 
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _RoomPageState extends State<RoomPage> {
         actions: [
           IconButton(
             onPressed: () {
-              // Add settings functionality
+
             },
             icon: Icon(Icons.settings),
           ),
@@ -47,7 +47,7 @@ class _RoomPageState extends State<RoomPage> {
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/room_menu_bg.jpg'), // Set the background image
+          image: AssetImage('assets/images/room_menu_bg.jpg'), 
           fit: BoxFit.cover,
         ),
       ),
@@ -65,7 +65,7 @@ class _RoomPageState extends State<RoomPage> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  userData = userSnapshot.data?.data(); // Assign userData here
+                  userData = userSnapshot.data?.data(); 
       
                   final currentRoom = userData!['currentRoom'];
                   final currentPool = userData!['currentPool'];
@@ -89,7 +89,6 @@ class _RoomPageState extends State<RoomPage> {
                         itemCount: playerData!.length,
                         itemBuilder: (ctx, index) {
                           final player = playerData[index].data();
-                          // Create a custom postcard widget and pass player data to it.
                           return PostCardWidget(playerData: player);
                         },
                       );
@@ -98,7 +97,6 @@ class _RoomPageState extends State<RoomPage> {
                 },
               ),
             ),
-            // Button at the bottom of the page
             Row(
         children: [
           Expanded(
@@ -109,7 +107,7 @@ class _RoomPageState extends State<RoomPage> {
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
             ),
             onPressed: () {
-              if (userData != null) { // Check if userData is available
+              if (userData != null) { 
                 final currentPool = userData!['currentPool'];
                 final currentRoom = userData!['currentRoom'];
       
@@ -124,7 +122,6 @@ class _RoomPageState extends State<RoomPage> {
                     final gameStatus = playerDoc.data()?['game_over'];
       
                     if (gameStatus == false) {
-                      // Proceed to the game
                       if(widget.gameName == 'Snake'){
                       Navigator.push(
                         context,
@@ -140,7 +137,6 @@ class _RoomPageState extends State<RoomPage> {
                         ),
                       );}
                     } else {
-                      // Show a snackbar indicating that the player has already played
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("You have already played the game."),
@@ -177,7 +173,6 @@ class _RoomPageState extends State<RoomPage> {
         playerDataList.sort((a, b) => b['score'].compareTo(a['score']));
       
         if (playerDataList.isNotEmpty) {
-          // Calculate shares for top 3 players
           final topPlayers = playerDataList.take(3).toList();
       
           final firstPlayerShare = (totalPool! * 0.5).toInt();
@@ -314,21 +309,20 @@ class _RoomPageState extends State<RoomPage> {
             ),
           ],
         ),
-        // Repeat the above structure for 2nd and 3rd place or use a loop if applicable.
       
         Padding(
           padding: const EdgeInsets.only(bottom: 20.0),
           child: TextButton(
         onPressed: () => Navigator.of(context).pop(),
         style: TextButton.styleFrom(
-          backgroundColor: Colors.white, // Background color
+          backgroundColor: Colors.white, 
         ),
         child: Text(
           'Close',
           style: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 18,
-        color: Colors.black, // Text color
+        color: Colors.black, 
           ),
         ),
       ),
@@ -351,7 +345,6 @@ class _RoomPageState extends State<RoomPage> {
       
       
         } else {
-          // Show a message if no players with 'game_over' set to true are found
           ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Wait for other players to complete the game."),
@@ -396,12 +389,12 @@ class PostCardWidget extends StatelessWidget {
         Color.fromARGB(255, 47, 0, 255),
       ],
     ),
-    borderRadius: BorderRadius.circular(20.0), // Set the border radius
+    borderRadius: BorderRadius.circular(20.0), 
   ),
   child: ListTile(
     title: Text(playerData['handle'].toString(), style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold)),
     subtitle: Text(playerData['score'].toString(), style: TextStyle(color: Colors.white)),
-    tileColor: const Color.fromARGB(0, 255, 255, 255), // Set tileColor to transparent
+    tileColor: const Color.fromARGB(0, 255, 255, 255), 
     contentPadding: const EdgeInsets.all(16.0),
   ),
 )

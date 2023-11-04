@@ -19,7 +19,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // Listen to changes in the 'm_coins' field in Firestore
     FirebaseFirestore.instance
         .collection('users')
         .doc(widget.customerId)
@@ -160,10 +159,10 @@ class _HomeState extends State<Home> {
               ),
              Container(
   width: MediaQuery.of(context).size.width,
-  height: MediaQuery.of(context).size.height, // Set the height to occupy the entire screen height
+  height: MediaQuery.of(context).size.height, 
   decoration: BoxDecoration(
     color: Colors.white,
-    borderRadius: BorderRadius.vertical(top: Radius.circular(30)), // Round the top edges
+    borderRadius: BorderRadius.vertical(top: Radius.circular(30)), 
     boxShadow: [
       BoxShadow(
         color: Colors.grey.withOpacity(0.5),
@@ -176,7 +175,6 @@ class _HomeState extends State<Home> {
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      // Add the "Newly Arrived Games" text here
       Align(
         alignment: Alignment.centerLeft,
         child: Padding(
@@ -191,9 +189,8 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      // Horizontal scrolling for game cards
       Container(
-        height: MediaQuery.of(context).size.height * 0.3, // Adjust the height as needed
+        height: MediaQuery.of(context).size.height * 0.3, 
         child: ListView(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.all(16),
@@ -236,7 +233,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       Container(
-        height: MediaQuery.of(context).size.height * 0.3, // Adjust the height as needed
+        height: MediaQuery.of(context).size.height * 0.3, 
         child: ListView(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.all(16),
@@ -268,12 +265,12 @@ class _HomeState extends State<Home> {
   Widget _buildGameCard({required String gameName, required String imageURL,page, required String customerId}) {
     return Container(
       margin: EdgeInsets.only(right: 14),
-      width: 180, // Adjust the card width as needed
+      width: 180, 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(30), // Adjust the radius as needed
+            borderRadius: BorderRadius.circular(30),
             child: Image.asset(
               imageURL,
               width: 140,
@@ -291,7 +288,6 @@ class _HomeState extends State<Home> {
             ),
           ),
           ElevatedButton(
-            //make the color of the button red
             style: ElevatedButton.styleFrom(
               primary: Colors.red,
             ),
@@ -312,12 +308,12 @@ class _HomeState extends State<Home> {
   Widget _buildCouponCard({required String gameName, required String imageURL}) {
     return Container(
       margin: EdgeInsets.only(right: 20),
-      width: 250, // Adjust the card width as needed
+      width: 250, 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(30), // Adjust the radius as needed
+            borderRadius: BorderRadius.circular(30), 
             child: Image.asset(
               imageURL,
               width: 250,
@@ -335,7 +331,6 @@ class _HomeState extends State<Home> {
             ),
           ),
           ElevatedButton(
-            //make the color of the button red
             style: ElevatedButton.styleFrom(
               primary: Colors.red,
             ),

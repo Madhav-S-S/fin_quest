@@ -41,7 +41,7 @@ class _PoolSelectionPageState extends State<PoolSelectionPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent, // Set button color to transparent
+                      primary: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -83,47 +83,39 @@ Future<void> checkAndEnterRoom(BuildContext context, String customerId, String p
   final usersCollection = firestore.collection('users');
   final userDoc = await usersCollection.doc(customerId).get();
   final handle = userDoc.get('handle');
-  final userCoins = userDoc.get('m_coins'); // Get the user's m_coins value
+  final userCoins = userDoc.get('m_coins'); 
 
-  // Check if the user has enough coins to join the pool
   if (userCoins >= int.parse(pool)) {
-    // Query rooms with available space
+
     final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 5).where('gameName', isEqualTo: widget.gameName).
 get();
 
     if (vacantRooms.docs.isNotEmpty) {
-      // Find the first available room
       final roomDoc = vacantRooms.docs[0];
       final roomId = roomDoc.id;
 
-      // Check if a document with customerId exists inside the 'player_data' subcollection
       final playerDataDoc = await roomsCollection.doc(roomId).collection('player_data').doc(customerId).get();
       if (!playerDataDoc.exists) {
-        // Update the room's occupancy and add the customer to 'player_data'
         await roomsCollection.doc(roomId).update({
           'currentOccupancy': FieldValue.increment(1),
           'total_pool': FieldValue.increment(int.parse(pool)),
         });
 
-        // Add the customer as a document with customerId as the name inside 'player_data'
         await roomsCollection.doc(roomId).collection('player_data').doc(customerId).set({
           'score': 0,
           'handle': handle,
           'game_over': false,
         });
 
-        // Update the user's currentPool and currentRoom in the 'users' collection
         await usersCollection.doc(customerId).update({
           'currentPool': pool,
           'currentRoom': roomId,
         });
-        // Subtract ${pool} m_coins from the user
         await usersCollection.doc(customerId).update({
           'm_coins': FieldValue.increment(-int.parse(pool)),
         });
       }
 
-      // Navigate to the room page
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -131,44 +123,37 @@ get();
         ),
       );
     } else {
-      // Create a new room if no vacant rooms are available
       final newRoom = await roomsCollection.add({
-        'currentOccupancy': 1, // Initialize with the customer
+        'currentOccupancy': 1,
         'pool': pool,
         'total_pool': int.parse(pool),
         'result_published': false,
         'gameName': widget.gameName,
-        // You can add other room properties as needed
       });
 
-      // Add the customer as a document with customerId as the name inside 'player_data' of the new room
       await newRoom.collection('player_data').doc(customerId).set({
         'score': 0,
         'handle': handle,
         'game_over': false,
       });
 
-      // Update the user's currentPool and currentRoom in the 'users' collection
       await usersCollection.doc(customerId).update({
         'currentPool': pool,
         'currentRoom': newRoom.id,
       });
 
-      // Subtract ${pool} m_coins from the user
       await usersCollection.doc(customerId).update({
         'm_coins': FieldValue.increment(-int.parse(pool)),
       });
 
-      // Navigate to the room page
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => RoomPage(customerId: customerId,gameName : widget.gameName), // Pass the room ID to the RoomPage
+          builder: (context) => RoomPage(customerId: customerId,gameName : widget.gameName),
         ),
       );
     }
   } else {
-    // Notify the user that they don't have enough coins to join the pool
     showDialog(
       context: context,
       builder: (context) {

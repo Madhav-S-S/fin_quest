@@ -60,23 +60,19 @@ class _CreateUserPageState extends State<CreateUserPage> {
 
     if (customerId.isNotEmpty && handle.isNotEmpty) {
       await FirebaseFirestore.instance.collection('users').doc(customerId).set({
-        'currentPool': null, // You can set initial values here
+        'currentPool': null,
         'currentRoom': null,
         'handle': handle,
-        'm_coins': 0, // You can set the initial number of coins here
+        'm_coins': 0, 
         'key': key,
       });
-
-      //show succes message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('User created successfully.'),
         ),
       );
-      //go to login page
       Navigator.pop(context);
     } else {
-      // Show an error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Please fill in all the fields.'),
