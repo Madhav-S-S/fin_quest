@@ -67,7 +67,6 @@ class _QuizPageState extends State<QuizPage> {
         actions: [
           TextButton(
             onPressed: () async {
-                  // Retrieve 'currentPool' and 'currentRoom' from the 'users' document
                   DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
                       .collection('users')
                       .doc(widget.customerId)
@@ -80,10 +79,6 @@ class _QuizPageState extends State<QuizPage> {
                     if (currentPool != null && currentRoom != null) {
                       String pool = currentPool.toString();
                       String room = currentRoom.toString();
-
-                      // Now, you have 'pool' and 'room' containing the values of 'currentPool' and 'currentRoom'.
-
-                      // Update the 'score' field in the 'player_data' subcollection
                       await FirebaseFirestore.instance
                           .collection('$pool' + '_rooms')
                           .doc(room)
@@ -97,17 +92,16 @@ class _QuizPageState extends State<QuizPage> {
                           .collection('player_data')
                           .doc(widget.customerId)
                           .update({'game_over': true});
-                      // After updating the score, you can navigate to the RoomPage
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => RoomPage(customerId: widget.customerId,gameName: 'Financial Quiz',),
                         ),
                       );
                     } else {
-                      // Handle the case where either 'currentPool' or 'currentRoom' is null.
+
                     }
                   } else {
-                    // Handle the case where the document with the given customer ID does not exist.
+                    
                   }
               },
             child: Text('OK'),
@@ -125,7 +119,7 @@ class _QuizPageState extends State<QuizPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue, Colors.purple], // Adjust the colors as needed
+            colors: [Colors.blue, Colors.purple], 
           ),
         ),
         child: Center(

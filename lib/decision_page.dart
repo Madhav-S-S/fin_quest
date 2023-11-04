@@ -33,7 +33,7 @@ class _decisionPageState extends State<decisionPage> {
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/room_menu_bg.jpg'), // Set the background image
+          image: AssetImage('assets/images/room_menu_bg.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -57,25 +57,24 @@ class _decisionPageState extends State<decisionPage> {
             );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white.withOpacity(0.3), // Set a slightly transparent white background
+                  primary: Colors.white.withOpacity(0.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  minimumSize: Size(300, 150), // Set the button size
+                  minimumSize: Size(300, 150),
                 ),
                 child: Text(
                   "Join Room",
                   style: TextStyle(
                     fontSize: 30,
                     fontFamily: "Poppins",
-                    color: Colors.white, // Text color
+                    color: Colors.white,
                   ),
                 ),
               ),
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () async {
-                  //retrieve currentPool from collection 'users', document customerId, field currentPool
               try {
                 DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
                     .collection('users')
@@ -83,26 +82,18 @@ class _decisionPageState extends State<decisionPage> {
                     .get();
 
                 if (userSnapshot.exists) {
-                  // Check if the document with the given customer ID exists.
+                  // Checking if the document with the given customer ID exists.
                   dynamic currentPool = userSnapshot.get('currentPool');
                   dynamic currentRoom = userSnapshot.get('currentRoom');
 
                   if (currentPool != null && currentRoom != null) {
-                    // The 'currentPool' and 'currentRoom' fields exist and are not null.
-                    // Assign them to their respective variables.
                     String pool = currentPool.toString();
                     String room = currentRoom.toString();
-
-                    // Now, 'pool' and 'room' contain the values of 'currentPool' and 'currentRoom'.
-                    // You can use these variables as needed in your code.
                   } else {
-                    // Handle the case where either 'currentPool' or 'currentRoom' is null.
                   }
                 } else {
-                  // Handle the case where the document with the given customer ID does not exist.
                 }
               } catch (e) {
-                // Handle any errors that may occur during the retrieval.
                 print('Error: $e');
               }
 
@@ -114,18 +105,18 @@ class _decisionPageState extends State<decisionPage> {
             );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white.withOpacity(0.3), // Set a slightly transparent white background
+                  primary: Colors.white.withOpacity(0.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  minimumSize: Size(300, 150), // Set the button size
+                  minimumSize: Size(300, 150), 
                 ),
                 child: Text(
                   "My Room",
                   style: TextStyle(
                     fontSize: 30,
                     fontFamily: "Poppins",
-                    color: Colors.white, // Text color
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -133,8 +124,8 @@ class _decisionPageState extends State<decisionPage> {
               SizedBox(height: 40),
               ElevatedButton(
   onPressed: () async {
-    String currentPool = '';  // Initialize with default values
-    String currentRoom = '';  // Initialize with default values
+    String currentPool = '';  
+    String currentRoom = '';  
 
     try {
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
@@ -143,21 +134,15 @@ class _decisionPageState extends State<decisionPage> {
           .get();
 
       if (userSnapshot.exists) {
-        currentPool = userSnapshot.get('currentPool') ?? '';  // Update if found
-        currentRoom = userSnapshot.get('currentRoom') ?? '';  // Update if found
+        currentPool = userSnapshot.get('currentPool') ?? '';
+        currentRoom = userSnapshot.get('currentRoom') ?? '';
       }
     } catch (e) {
       print('Error: $e');
     }
 
-    // Now, you can use currentPool and currentRoom in your code.
-    // Check if they are not empty or null before using them.
-
     if (currentPool.isNotEmpty && currentRoom.isNotEmpty) {
-      // Call the function with the parameters
       await removePlayerDataFromRoom(widget.customerId, currentPool, currentRoom);
-
-      // Clear 'currentPool' and 'currentRoom' fields in the Firestore collection
       await FirebaseFirestore.instance
           .collection('users')
           .doc(widget.customerId)

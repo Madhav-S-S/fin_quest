@@ -51,7 +51,6 @@ final String customerId;
             ElevatedButton(
               onPressed: () async {
                 try {
-                  // Retrieve 'currentPool' and 'currentRoom' from the 'users' document
                   DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
                       .collection('users')
                       .doc(customerId)
@@ -63,11 +62,7 @@ final String customerId;
 
                     if (currentPool != null && currentRoom != null) {
                       String pool = currentPool.toString();
-                      String room = currentRoom.toString();
-
-                      // Now, you have 'pool' and 'room' containing the values of 'currentPool' and 'currentRoom'.
-
-                      // Update the 'score' field in the 'player_data' subcollection
+                      String room = currentRoom.toString();              
                       await FirebaseFirestore.instance
                           .collection('$pool' + '_rooms')
                           .doc(room)
@@ -81,31 +76,30 @@ final String customerId;
                           .collection('player_data')
                           .doc(customerId)
                           .update({'game_over': true});
-                      // After updating the score, you can navigate to the RoomPage
+                      
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => RoomPage(customerId: customerId,gameName: 'Snake',),
                         ),
                       );
                     } else {
-                      // Handle the case where either 'currentPool' or 'currentRoom' is null.
+                      
                     }
                   } else {
-                    // Handle the case where the document with the given customer ID does not exist.
+                    
                   }
-                } catch (e) {
-                  // Handle any errors that may occur during the retrieval or update.
+                } catch (e) {                  
                   print('Error: $e');
                 }
               },
 
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 255, 0, 0), // Change the button background color to your preferred color
-                minimumSize: Size(150, 50), // Set the button's minimum size
+                primary: Color.fromARGB(255, 255, 0, 0), 
+                minimumSize: Size(150, 50), 
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [// Add spacing between icon and text
+                children: [
                   Text(
                     "Proceed",
                     style: TextStyle(

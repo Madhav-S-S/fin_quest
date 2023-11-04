@@ -29,12 +29,12 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20), // Add padding from sides
+              padding: const EdgeInsets.symmetric(horizontal: 20), 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Align(
-                    alignment: Alignment.topCenter, // Align text to the top
+                    alignment: Alignment.topCenter, 
                     child: Text(
                       'Mirror+ Connecting to GameZone...',
                       style: TextStyle(
@@ -74,11 +74,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   Container(
-                    width: 100,
+                    width: 105,
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        // validate using firebase
                         login();
                       },
                       child: Text(
@@ -126,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   Container(
-                    width: 130, // Set the desired width
+                    width: 130,
                     child: TextField(
                       controller: incrementController,
                       decoration: InputDecoration(
@@ -144,38 +143,34 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 20),
                   InkWell(
                     onTap: () async {
-                      try {
-                        // Increment the coin count in the database.
+                      try {                        
                         await FirebaseFirestore.instance
                             .collection('users')
                             .doc(id_controller.text)
-                            .update({'m_coins': FieldValue.increment(int.parse(incrementController.text))});
-
-                        // Show a success message using a SnackBar.
+                            .update({'m_coins': FieldValue.increment(int.parse(incrementController.text))});                        
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Coins incremented successfully'),
-                            backgroundColor: Colors.green, // Customize the SnackBar's background color
+                            backgroundColor: Colors.green,
                           ),
                         );
                       } catch (e) {
-                        // Handle any errors that occurred during the database operation.
                         print('Error: $e');
                       }
                     },
                     child: Container(
-                      width: 50, // Adjust the size as needed
-                      height: 50, // Adjust the size as needed
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 0, 0), // Set the background color of the button
-                        shape: BoxShape.circle, // Create a circular shape
+                        color: Color.fromARGB(255, 255, 0, 0), 
+                        shape: BoxShape.circle, 
                       ),
                       child: Center(
                         child: Text(
                           '+',
                           style: TextStyle(
-                            color: Colors.white, // Set the text color
-                            fontSize: 24, // Set the text size
+                            color: Colors.white,
+                            fontSize: 24,
                           ),
                         ),
                       ),
@@ -193,22 +188,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-  // Get the customer ID from the text field.
   String customerId = id_controller.text;
-  String key = keyController.text; // Assuming you have a keyController.
-
-  // Create a reference to the collection 'users'.
+  String key = keyController.text; 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  // Check if the document with the given customer ID exists.
   DocumentSnapshot snapshot = await users.doc(customerId).get();
 
   if (snapshot.exists) {
-    // Check if the 'key' field in the document matches the value from keyController.
     final Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
   
   if (data != null && data['key'] == key) {
-      // Navigate to the home page.
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -216,7 +205,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } else {
-      // Show an error message if 'key' doesn't match.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Invalid key for the customer ID.'),
@@ -224,7 +212,6 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   } else {
-    // Show an error message if the customer ID does not exist.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('The customer ID does not exist.'),
