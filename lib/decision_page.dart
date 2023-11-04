@@ -48,13 +48,40 @@ class _decisionPageState extends State<decisionPage> {
             children: <Widget>[
               SizedBox(height: 100),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PoolSelectionPage(customerId: widget.customerId,gameName: widget.gameName,),
-              ),
-            );
+                onPressed: () async{
+                  // Access Firestore instance
+  final firestore = FirebaseFirestore.instance;
+
+  // Reference to the user document
+  DocumentReference userRef = firestore.collection('users').doc(widget.customerId);
+
+  try {
+    // Get the user data
+    DocumentSnapshot userData = await userRef.get();
+
+    // Check if currentPool and currentRoom are empty
+    if (userData['currentPool'] == null && userData['currentRoom'] == null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PoolSelectionPage(
+            customerId: widget.customerId,
+            gameName: widget.gameName,
+          ),
+        ),
+      );
+    } else {
+      // Show a snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You are already in a room'),
+        ),
+      );
+    }
+  } catch (e) {
+    // Handle any errors
+    print('Error: $e');
+  }
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white.withOpacity(0.3),
@@ -142,7 +169,6 @@ class _decisionPageState extends State<decisionPage> {
     }
 
     if (currentPool.isNotEmpty && currentRoom.isNotEmpty) {
-      await removePlayerDataFromRoom(widget.customerId, currentPool, currentRoom);
       await FirebaseFirestore.instance
           .collection('users')
           .doc(widget.customerId)
@@ -181,17 +207,5 @@ class _decisionPageState extends State<decisionPage> {
 
     );
   }
-  removePlayerDataFromRoom(String customerId, String currentPool, String currentRoom) async {
-  try {
-    await FirebaseFirestore.instance
-        .collection('${currentPool}_rooms')
-        .doc(currentRoom)
-        .collection('player_data')
-        .doc(customerId)
-        .delete();
-  } catch (e) {
-    print('Error: $e');
-  }
-}
 
 }
