@@ -88,7 +88,8 @@ Future<void> checkAndEnterRoom(BuildContext context, String customerId, String p
   // Check if the user has enough coins to join the pool
   if (userCoins >= int.parse(pool)) {
     // Query rooms with available space
-    final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 5).get();
+    final vacantRooms = await roomsCollection.where('currentOccupancy', isLessThan: 5).where('gameName', isEqualTo: widget.gameName).
+get();
 
     if (vacantRooms.docs.isNotEmpty) {
       // Find the first available room
